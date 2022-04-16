@@ -14,7 +14,6 @@ impl Solution {
             }
         }
         
-        println!("map: {:?}", map);
         let mut intersection = vec![];
         
         for n in large{
@@ -25,7 +24,6 @@ impl Solution {
                 if (*times == 0){
                     map.remove(&n);
                 }
-                println!("n: {}, map: {:?}",n,   map);
             }
         }
         
