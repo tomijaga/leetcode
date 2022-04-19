@@ -4,15 +4,9 @@ def isOdd(elem: int):
 class Solution:
     def threeConsecutiveOdds(self, arr: List[int]) -> bool:
         
-        numOds = 0
-        
-        for e in arr:
-            if e % 2 == 1:
-                numOds += 1
-            else:
-                numOds = 0
-                
-            if numOds == 3:
+        l = len(arr)
+        while l > 2:
+            if isOdd(arr[l -1]) and isOdd(arr[l-2]) and isOdd(arr[l-3]):
                 return True
-            
+            l-=1
         return False
