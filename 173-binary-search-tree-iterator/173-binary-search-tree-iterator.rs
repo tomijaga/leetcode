@@ -17,26 +17,26 @@ impl TreeNode {
       
       fn trav (node: &TreeNode, stack: &mut Vec<i32>){
           if let Some(ref left) = node.left{
-              trav(&left.borrow(), stack);
+               trav(&left.borrow(), stack);
           }
           
-          stack.push(node.val);
+          stack.push( node.val);
           
           if let Some(ref right) = node.right{
-              trav(&right.borrow(), stack);
+               trav(&right.borrow(), stack);
           }
       }
       
       let mut stack = vec![];
      
       trav(self, &mut stack);
+      stack.reverse();
       stack
   }
 }
 
 struct BSTIterator {
-    array: Vec<i32>,
-    index: usize
+    stack: Vec<i32>,
 }
 
 
@@ -47,28 +47,28 @@ struct BSTIterator {
 impl BSTIterator {
 
     fn new(root: Option<Rc<RefCell<TreeNode>>>) -> Self {
-        let mut array = vec![];
+        let mut stack = vec![];
         if let Some(node) = root{
             let in_order_stack = node.borrow().inorder_traversal();
-            array = in_order_stack;
+            stack = in_order_stack;
         }
         
-        // println!("{:?}", array);
+        // println!("{:?}", stack);
         BSTIterator{
-            array: array,
-            index: 0
+            stack: stack,
         }
     }
     
     fn next(&mut self) -> i32 {
-        let prev  = self.index;
-        self.index+=1;
         
-        self.array[prev]
+        if let Some(val) = self.stack.pop(){
+            return val;
+        }
+        unreachable!();
     }
     
     fn has_next(&self) -> bool {
-        self.index < self.array.len()
+        !self.stack.is_empty()
     }
 }
 
