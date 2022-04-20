@@ -28,9 +28,7 @@ def maxTree(nums: List[int]) -> Optional[TreeNode]:
     node = TreeNode(max);
     
     left = nums[0:maxIndex]
-    print(left)
     right = nums[maxIndex+1:l]
-    print(right)
     
     node.left = maxTree(left)
     node.right = maxTree(right)
