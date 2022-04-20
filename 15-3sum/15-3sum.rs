@@ -36,7 +36,6 @@ impl Solution {
             }
         } 
         
-        let mut v:Vec<Vec<i32>> = sum.into_iter().collect();
-        v
+        sum.into_iter().collect::<Vec<Vec<i32>>>()
     }
 }
