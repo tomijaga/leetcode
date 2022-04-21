@@ -1,5 +1,3 @@
-use std::{i32, cmp};
-
 pub fn diff(b: i32, a: i32)->i32{
     (b - a).abs()
 }
