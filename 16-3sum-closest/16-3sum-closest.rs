@@ -1,14 +1,7 @@
 use std::{i32, cmp};
-pub fn abs(val:i32)->i32{
-    let _abs = val.abs();
-    if _abs == i32::MIN{
-        return _abs +1;
-    }
-    _abs
-}
 
 pub fn diff(b: i32, a: i32)->i32{
-    abs(b - a)
+    (b - a).abs()
 }
 
 pub fn is_closer(prev: i32, curr: i32, target: i32)->bool{
@@ -30,7 +23,6 @@ impl Solution {
             
             while(j < k){
                 let sum = nums[i]+ nums[j] + nums[k];
-                let diff = (target - sum);
                 // println!("{}", (target-closest ).abs());
                 if (sum > target){
                     k-=1;
