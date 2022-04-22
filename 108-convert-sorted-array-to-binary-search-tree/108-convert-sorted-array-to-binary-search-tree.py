@@ -4,22 +4,30 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:   
-    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
-        l = len(nums)
+class Solution: 
+    def bst(self, nums: List[int], start: int, end: int ) -> Optional[TreeNode]:
+        l = end - start
         
-        if l == 0:
+        if end < start or l == 0:
             return None
         
         if l == 1:
-            return TreeNode(nums[0])
+            return TreeNode(nums[start])
         
-        median_index = (int)(l/2)
+        median_index = (int)(l/2) + start
         median = nums[median_index]
         node = TreeNode(median)
         
-        node.left = self.sortedArrayToBST(nums[0:median_index])
-        node.right = self.sortedArrayToBST(nums[median_index+1:l])
+#         print("left: {start}, {end}".format(start = start, end = median_index))
+#         print(nums[start:median_index])
+        
+#         print("right: {start}, {end}".format(start = median_index +1, end = end))
+#         print(nums[median_index+1:l])
+        node.left = self.bst(nums, start, median_index)
+        node.right = self.bst(nums, median_index+1, end)
         
         return node
+        
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        return self.bst(nums, 0, len(nums))
         
