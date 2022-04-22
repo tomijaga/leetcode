@@ -26,7 +26,7 @@ impl Solution {
             }
         }
         
-        println!("{:?}", zeroes);
+        // println!("{:?}", zeroes);
         
         for (x, y) in zeroes.iter(){
             reset_zeroes(matrix, *x, *y);
