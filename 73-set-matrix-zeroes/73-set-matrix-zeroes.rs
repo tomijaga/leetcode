@@ -1,4 +1,4 @@
-pub fn reset_zeroes(matrix: &mut Vec<Vec<i32>>, x: usize, y: usize){
+pub fn reset_to_zero(matrix: &mut Vec<Vec<i32>>, x: usize, y: usize){
     let m = matrix.len();
     let n = matrix[0].len();
     
@@ -29,7 +29,7 @@ impl Solution {
         // println!("{:?}", zeroes);
         
         for (x, y) in zeroes.iter(){
-            reset_zeroes(matrix, *x, *y);
+            reset_to_zero(matrix, *x, *y);
         }
         
     }
