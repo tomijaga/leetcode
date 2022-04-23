@@ -4,10 +4,10 @@ impl Solution {
             return false;
         }
         let mut s_arr = s.chars().collect::<Vec<char>>();
-        s_arr.sort();
+        s_arr.sort_unstable();
         
         let mut t_arr = t.chars().collect::<Vec<char>>();
-        t_arr.sort();
+        t_arr.sort_unstable();
         
         return s_arr == t_arr
     }
