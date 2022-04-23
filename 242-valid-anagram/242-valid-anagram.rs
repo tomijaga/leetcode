@@ -9,13 +9,6 @@ impl Solution {
         let mut t_arr = t.chars().collect::<Vec<char>>();
         t_arr.sort();
         
-        let s: String = s_arr.iter().collect();
-        
-        for (i, c) in s.chars().enumerate(){
-            if (c != t_arr[i]){
-                return false;
-            }
-        }
-        true
+        return s_arr == t_arr
     }
 }
