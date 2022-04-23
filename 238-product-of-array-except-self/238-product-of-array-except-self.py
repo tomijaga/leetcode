@@ -8,7 +8,6 @@ class Solution:
             prod *= n
             
             results[i+1] = prod
-        print(results)
         
         prod=1
         for i in reversed(range(1, len(nums))):
@@ -16,7 +15,6 @@ class Solution:
             prod *= n
             
             results[i-1] *= prod
-        print(results)
         
         
         return results
