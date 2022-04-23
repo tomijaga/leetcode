@@ -13,11 +13,8 @@ impl Solution {
         let l = nums.len();
         let mut  i = 0;
         let mut skip = 0;
-        let mut unique = 0;
         
         while(i<l){
-            
-
             
             let n = &mut nums[i];
             
