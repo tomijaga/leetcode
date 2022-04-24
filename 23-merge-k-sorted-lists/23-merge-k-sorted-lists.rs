@@ -30,23 +30,10 @@ impl Ord for ListNode{
     }
 }
 
-pub fn new_node(val: i32) -> Option<Box<ListNode>>{
-    Some(
+pub fn new_node(val: i32) -> Box<ListNode> {
         Box::new(
             ListNode::new(val)
         )
-    )
-}
-
-pub fn vec_to_list_node(vec: &mut Vec<&Box<ListNode>>, i: usize) -> Option<Box<ListNode>>{
-    if (i >= vec.len()){
-        return None;
-    }
-    
-    let mut node = vec[i].clone();
-    node.next = vec_to_list_node(vec, i+1);
-     
-    return Some(node);
 }
 
 impl Solution {
@@ -57,15 +44,25 @@ impl Solution {
         
         let mut heap = BinaryHeap::new();
         
-        for mut list in lists.iter(){
-            while let Some(_list) = list {
-                list = &_list.next;
-                heap.push(_list);
-                
+        for mut list in lists{
+            if let Some(l)= list{
+                heap.push(Reverse(l));
             }
         }
         
-        let mut heap_vec = heap.into_sorted_vec();
-        vec_to_list_node(&mut heap_vec, 0)
+        let mut dummy = new_node(-1);
+        let mut curr = &mut dummy;
+        
+        while let Some(Reverse(node)) = heap.pop() {
+            curr.next = Some(node.clone());
+            curr = curr.next.as_mut().unwrap();
+            
+            if let Some(next) = node.next {
+                heap.push(Reverse(next));
+            }
+            
+        }
+        
+        dummy.next
     }
 }
