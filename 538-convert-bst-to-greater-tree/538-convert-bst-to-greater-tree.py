@@ -5,23 +5,22 @@
 #         self.left = left
 #         self.right = right
 
-def convert(root:Optional[TreeNode], sum: int) -> int:
-    if root.right:
-        sum = convert(root.right, sum);
-    
-    sum += root.val
-    root.val = sum
-    
-    if root.left:
-        sum=convert(root.left, sum)
-    
-    return sum
+
     
 class Solution:
+    sum = 0
+    
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        sum = 0
-        if root:
-            convert(root, sum)
+        def convert(root:Optional[TreeNode]):
+            if root: 
+                convert(root.right);
+            
+                self.sum += root.val
+                root.val = self.sum
+
+                convert(root.left)
+        
+        convert(root)
         
         return root
         
