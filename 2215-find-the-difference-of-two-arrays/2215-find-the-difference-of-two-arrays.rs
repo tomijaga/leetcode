@@ -1,33 +1,24 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashSet};
 
 impl Solution {
     pub fn find_difference(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
-        let mut map = HashMap::new();
+        let mut set1:HashSet<i32> = nums1.into_iter().collect();
+        let mut set2:HashSet<i32> = nums2.into_iter().collect();
         
-        for n in nums1.iter(){
-            map.insert(*n, false);
-        }
+        let (mut v1, mut v2) = (vec![], vec![]);
         
-        let mut set = HashSet::new();
-        
-        for n in nums2{
-            if let Some(exists) = map.get_mut(&n){
-                if (*exists == false){
-                    *exists = true;
-                }
-            }else{
-                set.insert(n);
+        for n in set1.iter(){
+            if !set2.contains(n){
+                v1.push(*n);
             }
         }
         
-        let mut v1 = vec![];
-        
-        for (key, val) in map{
-            if (val == false){
-                v1.push(key);
+        for n in set2{
+            if !set1.contains(&n){
+                v2.push(n);
             }
         }
-        
-        vec![v1, set.into_iter().collect::<Vec<i32>>()]
+    
+        vec![v1, v2]
     }
 }
