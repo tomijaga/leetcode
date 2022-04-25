@@ -1,47 +1,68 @@
-// Java Iterator interface reference:
-// https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+# Below is the interface for Iterator, which is already defined for you.
+#
+# class Iterator:
+#     def __init__(self, nums):
+#         """
+#         Initializes an iterator object to the beginning of a list.
+#         :type nums: List[int]
+#         """
+#
+#     def hasNext(self):
+#         """
+#         Returns true if the iteration has more elements.
+#         :rtype: bool
+#         """
+#
+#     def next(self):
+#         """
+#         Returns the next element in the iteration.
+#         :rtype: int
+#         """
 
-class PeekingIterator implements Iterator<Integer> {
-    Boolean peeked;
-    Integer peekNext;
-    Iterator<Integer> iterator;
-    
-	public PeekingIterator(Iterator<Integer> iterator) {
-	    // initialize any member here.
-	    this.iterator  = iterator;
-        peeked = false;
-        peekNext = null;
-	}
-	
-    // Returns the next element in the iteration without advancing the iterator.
-	public Integer peek() {
-        if (peekNext== null){
-            peekNext = iterator.next();
-        }
+class PeekingIterator:
+    def __init__(self, iterator):
+        """
+        Initialize your data structure here.
+        :type iterator: Iterator
+        """
+        self.iter = iterator
+        self.nextValue = None
+        self.peeked = False
+
+    def peek(self):
+        """
+        Returns the next element in the iteration without advancing the iterator.
+        :rtype: int
+        """
+        if self.peeked:
+            return self.nextValue
+        else:
+            self.nextValue = self.iter.next()
+            self.peeked = True
+            return self.nextValue
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        if self.peeked:
+            self.peeked = False
+            return self.nextValue
+        else:
+            return self.iter.next()
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        if self.peeked and self.nextValue:
+            return True
+        else:
+            return self.iter.hasNext()
         
-        return peekNext;
-	}
-	
-	// hasNext() and next() should behave the same as in the Iterator interface.
-	// Override them if needed.
-	@Override
-	public Integer next() {
-	    if (peekNext == null){
-            return iterator.next();
-        }
-        
-        Integer _next = peekNext;
-        peekNext = null;
-        
-        return _next;
-	}
-	
-	@Override
-	public boolean hasNext() {
-	    if(peekNext == null){
-            return iterator.hasNext();
-        }
-        
-        return true;
-	}
-}
+
+# Your PeekingIterator object will be instantiated and called as such:
+# iter = PeekingIterator(Iterator(nums))
+# while iter.hasNext():
+#     val = iter.peek()   # Get the next element but not advance the iterator.
+#     iter.next()         # Should return the same value as [val].
