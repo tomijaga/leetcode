@@ -4,7 +4,6 @@ pub fn isOdd(n: i32)-> bool{
 
 impl Solution {
     pub fn three_consecutive_odds(arr: Vec<i32>) -> bool {
-        let mut odds = 0;
         if arr.len() < 3{
             return false;
         }
