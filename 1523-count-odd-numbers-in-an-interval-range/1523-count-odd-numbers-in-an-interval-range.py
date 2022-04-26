@@ -5,7 +5,7 @@ class Solution:
     def countOdds(self, low: int, high: int) -> int:
         diff = high - low
         
-        if isEven(low) and isEven(high) and True:
+        if isEven(low) and isEven(high):
             return (int)(diff/2)
         else:
             return (int)(diff/2) + 1
