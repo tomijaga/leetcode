@@ -4,7 +4,6 @@ class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
         nums.sort()
         
-        sum = 0
         closest = 3001
         
         for i in range(0, len(nums) -2):
