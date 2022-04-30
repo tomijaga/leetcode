@@ -2,12 +2,13 @@
 impl Solution {
     pub fn minimum_average_difference(nums: Vec<i32>) -> i32 {
         
+        let mut sum_arr = vec![];
         let mut sum: i64 = 0;
         
-        let sum_arr = nums.iter().map(|&a|{
-            sum += a as i64; 
-            sum
-        }).collect::<Vec<i64>>();
+        for n in nums{
+            sum += n as i64;
+            sum_arr.push(sum);
+        }
         
         let mut min = i64::MAX;
         let mut min_index = 0;
