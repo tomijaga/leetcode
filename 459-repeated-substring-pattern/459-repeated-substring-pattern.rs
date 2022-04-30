@@ -1,38 +1,21 @@
+pub fn match_all_subs(bytes: &[u8], len: usize) -> bool{
+    let sub = &bytes[..len];
+    
+    (&bytes[len..]).chunks(len).all(|chunk| chunk == sub)
+}
+
 impl Solution {
     pub fn repeated_substring_pattern(s: String) -> bool {
-        let chars = s.chars().collect::<Vec<char>>();
+        let bytes = s.as_bytes();
         
-        for n in 1..(chars.len()/2 + 1){
-            if (chars.len() % n > 0){
+        for n in 1..(bytes.len()/2 + 1){
+            if (bytes.len() % n > 0){
                 continue;
             }
             
-            let mut start = n;
-            let mut prev = chars[0..n].to_vec();
-            let mut curr = vec![];
-            
-            let mut repeated = true;
-            
-            while(repeated && start < chars.len()){
-                
-                if (start + n > chars.len()){
-                    repeated = false; 
-                    break;
-                }
-                
-                curr = chars[start..(start + n)].to_vec();
-                start += n;
-                
-                // println!("{:?}, {:?}", prev, curr);
-                
-                repeated = prev == curr && repeated;
-                prev = curr;
-            }
-            
-            if (repeated == true){
+            if (match_all_subs(bytes, n)){
                 return true;
             }
-            
         }
         
         false
