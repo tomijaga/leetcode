@@ -4,7 +4,7 @@ impl Solution {
         
         let mut sum: i64 = 0;
         
-        let sum_arr = nums.into_iter().map(|a|{
+        let sum_arr = nums.iter().map(|&a|{
             sum += a as i64; 
             sum
         }).collect::<Vec<i64>>();
