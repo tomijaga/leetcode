@@ -8,7 +8,7 @@ impl Solution {
     pub fn sort_array_by_parity(nums: Vec<i32>) -> Vec<i32> {
         let mut nums = nums;
         
-        nums.sort_by(|a, b|{ 
+        nums.sort_unstable_by(|a, b|{ 
             if (is_even(a) == is_even(b)){
                 a.cmp(b)
             }else if (is_even(a)){
