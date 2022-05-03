@@ -9,7 +9,6 @@ impl Solution {
         let mut start = len;
         let mut end = 0;
         
-        // println!("{:?}\n{:?}", &nums, &sorted);
         for i in 0..len{
             if nums[i]!= sorted[i]{
                 start = i;
@@ -17,13 +16,15 @@ impl Solution {
             }
         }
         
-        
-        for j in (0..len).rev(){
-            if nums[j]!= sorted[j]{
-                end = j;
-                break;
+        if start < len{
+            for j in (0..len).rev(){
+                if nums[j]!= sorted[j]{
+                    end = j;
+                    break;
+                }
             }
         }
+        
         
         if end < start{
             0
