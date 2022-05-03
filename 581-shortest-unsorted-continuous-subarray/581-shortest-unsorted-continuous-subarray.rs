@@ -9,7 +9,7 @@ impl Solution {
         let mut start = len;
         let mut end = 0;
         
-        println!("{:?}\n{:?}", &nums, &sorted);
+        // println!("{:?}\n{:?}", &nums, &sorted);
         for i in 0..len{
             if nums[i]!= sorted[i]{
                 start = i;
