@@ -26,7 +26,6 @@ impl MyQueue {
     }
     
     fn push(&mut self, x: i32) {
-        self._flip();
         self.inbox.push(x);
     }
     
