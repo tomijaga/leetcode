@@ -1,6 +1,7 @@
 struct MyQueue {
     inbox: Vec<i32>,
-    outbox: Vec<i32>
+    outbox: Vec<i32>,
+    front: i32
 }
 
 
@@ -14,6 +15,7 @@ impl MyQueue {
         Self{
             inbox: vec![],
             outbox: vec![],
+            front: -1
         }
     }
     
@@ -26,6 +28,10 @@ impl MyQueue {
     }
     
     fn push(&mut self, x: i32) {
+        if self.inbox.is_empty(){
+            self.front = x;
+        }
+        
         self.inbox.push(x);
     }
     
@@ -34,13 +40,12 @@ impl MyQueue {
         self.outbox.pop().unwrap()
     }
     
-    fn peek(&mut self) -> i32 {
-        self._flip();
+    fn peek(&self) -> i32 {
         if let Some(&last) = self.outbox.last(){
             return last;
         }
         
-        return -1;
+        self.front
     }
     
     fn empty(&self) -> bool {
