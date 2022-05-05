@@ -5,7 +5,7 @@ pub fn get_num(matrix: &Vec<Vec<i32>>, index: usize)-> i32 {
     
     let (i, j) = (index /n, index%n);
     let n = matrix[i][j];
-    println!("{} -> ({}, {}) -> {}", index, i, j, n);
+    // println!("{} -> ({}, {}) -> {}", index, i, j, n);
     n
 }
 
@@ -20,7 +20,7 @@ impl Solution {
         while left < right{
             let mid = left + (right - left)/2;
             let n = get_num(&matrix, mid);
-            println!("left: {}, right:{}", left, right);
+            // println!("left: {}, right:{}", left, right);
             
             if n < target{
                 left = mid + 1;
