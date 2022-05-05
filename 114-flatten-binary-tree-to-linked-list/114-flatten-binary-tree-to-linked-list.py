@@ -4,15 +4,17 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-def split(root: Optional[TreeNode]) -> Optional[TreeNode]:
-    if root ==None:
+def split(root: Optional[TreeNode]) -> None:
+    if root == None:
             return None
     
     left = root.left
     root.left = None
     
-    left = split(left)
-    right = split(root.right)
+    split(left)
+    
+    right = root.right
+    split(right)
     
     if left:
         root.right = left
@@ -25,8 +27,6 @@ def split(root: Optional[TreeNode]) -> Optional[TreeNode]:
     else:
         root.right = right
     
-    return root
-
 class Solution:
     def flatten(self, root: Optional[TreeNode]) -> None:
         split(root)
