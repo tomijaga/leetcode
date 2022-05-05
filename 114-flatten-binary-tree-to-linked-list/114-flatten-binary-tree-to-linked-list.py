@@ -6,26 +6,23 @@
 #         self.right = right
 def split(root: Optional[TreeNode]) -> None:
     if root == None:
-            return None
+        return
     
     left = root.left
     root.left = None
     
     split(left)
     
-    right = root.right
-    split(right)
+    split(root.right)
     
     if left:
+        right = root.right
         root.right = left
-        trav = left
         
-        while (trav.right):
-            trav = trav.right
+        while (left.right):
+            left = left.right
         else:
-            trav.right = right
-    else:
-        root.right = right
+            left.right = right
     
 class Solution:
     def flatten(self, root: Optional[TreeNode]) -> None:
