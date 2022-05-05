@@ -25,10 +25,8 @@ impl MyStack {
     
     fn pop(&mut self) -> i32 {
         while self.inbox.len() > 1{
-            if let Some(elem) = self.inbox.pop_front(){
-                self.top = elem;
-                self.outbox.push_back(elem);
-            }
+            self.top = self.inbox.pop_front().unwrap();
+            self.outbox.push_back(self.top);
         }
         
         let item = self.inbox.pop_front().unwrap();
