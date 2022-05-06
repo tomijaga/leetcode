@@ -1,10 +1,10 @@
-
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        s = set([]);
         nums.sort()
-        
+        res = []
         for i in range(0, len(nums) - 2):
+            if i>0 and nums[i] == nums[i-1]:
+                continue
             j = i + 1
             k = len(nums) - 1
             
@@ -17,8 +17,17 @@ class Solution:
                 elif arr_sum < 0:
                     j+=1
                 else:
-                    s.add(tuple(arr))
-                    k-=1
-                    j+=1
+                    # print([[i, j, k], arr])
+                    res.append(arr)
+                    while j< k and nums[j] == nums[j + 1]:
+                        j+=1
+                    else:
+                        j+=1
+                    
+                    while j< k and nums[k] == nums[k-1]:
+                        k-=1
+                    else:
+                        k-=1
+
         
-        return [arr for arr in s]
+        return res
