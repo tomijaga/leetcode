@@ -31,7 +31,6 @@ impl MedianFinder {
         
         let s_len = self.small.len();
         let mid = self.len()/2;
-        // println!("l:{}, s:{}, m:{}", self.len(), s_len, mid);
         
         if s_len <= mid{
             if let Some(Reverse(n)) = self.big.pop(){
