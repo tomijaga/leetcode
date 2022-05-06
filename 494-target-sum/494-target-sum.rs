@@ -1,12 +1,10 @@
 impl Solution {
     pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {
-        let mut nums = nums;
         let mut stack = vec![0];
         let mut count = 0;
         
-        while let Some(next) = nums.pop() {
+        for next in nums {
             let mut new_stack = vec![];
-            
             
             for curr in stack {
                 let n1 = curr - next;
