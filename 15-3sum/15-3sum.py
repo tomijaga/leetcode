@@ -14,15 +14,9 @@ class Solution:
                 arr_sum = sum(arr)
 
                 if arr_sum > 0:
-                    while j< k and nums[k] == nums[k-1]:
-                        k-=1
-                    else:
-                        k-=1
+                    k-=1
                 elif arr_sum < 0:
-                    while j< k and nums[j] == nums[j + 1]:
-                        j+=1
-                    else:
-                        j+=1
+                    j+=1
                 else:
                     # print([[i, j, k], arr])
                     res.append(arr)
