@@ -13,15 +13,12 @@ impl Solution {
         let mut left = 0;
         let mut bottom = matrix.len();
         
-        while is_valid(top, bottom, left, right){
-            if is_valid(top, bottom, left, right){
-                for j in left..right{
-                    spiral.push(matrix[top][j]);
-                }
-                top+=1;
+        while is_valid(top, bottom, left, right) {
+            for j in left..right{
+                spiral.push(matrix[top][j]);
             }
+            top+=1;
             
-            println!("{:?}", spiral);
         
             if is_valid(top, bottom, left, right){
             
@@ -31,7 +28,6 @@ impl Solution {
                 right-=1;
             }
 
-            println!("{:?}", spiral);
 
             if is_valid(top, bottom, left, right){
 
@@ -40,7 +36,6 @@ impl Solution {
                 }
                 bottom-=1;
             }
-            println!("{:?}", spiral);
             
             if is_valid(top, bottom, left, right){
                 for i in (top..bottom).rev(){
@@ -49,9 +44,7 @@ impl Solution {
                 left+=1;
             }
 
-            println!("{:?}", spiral);
         }
-        
         spiral
     }
 }
