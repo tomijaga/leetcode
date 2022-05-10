@@ -5,13 +5,6 @@
 #         self.left = left
 #         self.right = right
 
-def toStack(root, stack):
-    while root:
-        stack.append(root)
-        root = root.left
-        
-    return stack
-
 class BSTIterator(object):
     
     def __init__(self, root):
@@ -20,14 +13,18 @@ class BSTIterator(object):
         """
         if root == None:
             return
+        self.stack = []
+        self.addAllToStack(root)
 
-        self.stack = toStack(root, [])
-
+    def addAllToStack(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
+        
     def next(self):
         """
         :rtype: int
         """
-        
         return self.get_val()
             
     def get_val(self):
@@ -36,7 +33,7 @@ class BSTIterator(object):
             node = self.stack.pop()
             val = node.val
             if node.right:
-                self.stack = toStack(node.right, self.stack)
+                self.addAllToStack(node.right)
         
         return val
 
