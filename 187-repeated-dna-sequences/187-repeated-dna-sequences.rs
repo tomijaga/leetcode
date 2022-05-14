@@ -2,6 +2,10 @@ use std::collections::HashSet;
 
 impl Solution {
     pub fn find_repeated_dna_sequences(s: String) -> Vec<String> {
+        if s.len() <= 10 {
+            return vec![];
+        }
+        
         let mut set: HashSet<&str> = HashSet::new();
         let mut duplicates: HashSet<&str> = HashSet::new();
         
