@@ -6,7 +6,6 @@ impl Solution {
         let mut duplicates: HashSet<&str> = HashSet::new();
         
         for i in 0..(s.len() as i32 - 9){
-            println!("{}", i);
             let i = i as usize;
             let seq = &s[i..(i + 10)];
             
