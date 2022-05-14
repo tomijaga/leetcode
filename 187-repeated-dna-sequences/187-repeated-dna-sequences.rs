@@ -13,7 +13,7 @@ impl Solution {
             let i = i as usize;
             let seq = &s[i..(i + 10)];
             
-            if let Some(_) = set.get(seq){
+            if set.contains(seq){
                 duplicates.insert(seq);
             }else{
                 set.insert(seq);
