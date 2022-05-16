@@ -16,7 +16,9 @@
 // }
 impl Solution {
     pub fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        if let Some(mut node) = head{
+        if head.is_none() { return head; }
+        
+            let mut node = head.unwrap();
             let mut newHead = node.clone();
             let mut is_duplicate   = false;
             
@@ -30,15 +32,13 @@ impl Solution {
                 node = next;
             }
             
-            if is_duplicate{
+            return if is_duplicate{
                 Solution::delete_duplicates(newHead.next)
             }else{
                 newHead.next = Solution::delete_duplicates(newHead.next);
             
                 Some(newHead)
             }
-        }else{
-            None
-        }
+        
     }
 }
