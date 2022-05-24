@@ -18,8 +18,9 @@ impl Solution {
             
             if prev[1] >= next[0] {
                 let newInterval = vec![prev[0], max(prev[1], next[1])];
-                result.pop();
-                result.push(newInterval);
+                if let Some(last) = result.last_mut(){
+                    *last = newInterval;
+                };
             }else{
                 result.push(intervals[i].clone());
             }
