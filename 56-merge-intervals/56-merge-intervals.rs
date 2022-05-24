@@ -13,12 +13,12 @@ impl Solution {
         let mut result = vec![intervals[0].clone()];
         
         for i in 1..intervals.len(){
-            let prev = result.last().unwrap();
+            let len = result.len();
+            let mut prev = &mut result[len-1];
             let next = &intervals[i];
             
             if prev[1] >= next[0] {
-                let len = result.len();
-                result[len - 1][1] = max(prev[1], next[1]);
+                prev[1] = max(prev[1], next[1]);
             }else{
                 result.push(intervals[i].clone());
             }
