@@ -19,10 +19,8 @@
 use std::rc::Rc;
 use std::cell::RefCell;
 
-
-impl Solution {
-    pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        if nums.len() == 0{
+pub fn construct(nums: &[i32])-> Option<Rc<RefCell<TreeNode>>>{
+    if nums.len() == 0{
             return None;
         }
         
@@ -35,11 +33,11 @@ impl Solution {
         
         let mut node = TreeNode::new(nums[max_index]);
         
-        let left_sub = nums[..max_index].to_vec();
-        let right_sub = nums[max_index + 1..].to_vec();
+        let left_sub = &nums[..max_index];
+        let right_sub = &nums[max_index + 1..];
         
-        node.left = Solution::construct_maximum_binary_tree(left_sub);
-        node.right = Solution::construct_maximum_binary_tree(right_sub);
+        node.left = construct(left_sub);
+        node.right = construct(right_sub);
         
         Some(Rc::new(
             RefCell::new(
@@ -47,5 +45,10 @@ impl Solution {
             )
         ))
         
+}
+
+impl Solution {
+    pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+        construct(&nums)
     }
 }
