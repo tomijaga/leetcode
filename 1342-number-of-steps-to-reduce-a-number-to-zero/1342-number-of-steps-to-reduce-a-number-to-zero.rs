@@ -1,18 +1,15 @@
 pub fn calc_steps(step: (i32, i32))-> (i32,i32){
-    let (num, count) = step;
-    
-    if num == 0{
+    if step.0 == 0{
         step
-    }else if num % 2 == 0{
-        calc_steps((num/2, count +1))
+    }else if step.0 % 2 == 0{
+        calc_steps((step.0/2, step.1 +1))
     }else{
-        calc_steps((num -1 , count +1))
+        calc_steps((step.0 - 1 , step.1 +1))
     }
 }
 
 impl Solution {
     pub fn number_of_steps(num: i32) -> i32 {
-        let (_, count ) = calc_steps((num, 0));
-        count
+        calc_steps((num, 0)).1
     }
 }
