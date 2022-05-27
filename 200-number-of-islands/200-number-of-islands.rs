@@ -3,6 +3,10 @@ use std::collections::VecDeque;
 
 impl Solution {
     pub fn num_islands(grid: Vec<Vec<char>>) -> i32 {
+        if (grid.len() == 0){
+            return 0;
+        }
+        
         let mut visited: HashSet<(usize, usize)> = HashSet::new();
         let (row, col) = (grid.len(), grid[0].len());
         
