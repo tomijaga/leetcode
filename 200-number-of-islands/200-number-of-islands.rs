@@ -7,10 +7,11 @@ impl Solution {
         let (row, col) = (grid.len(), grid[0].len());
         
         let mut n = 0;
+        let mut queue = VecDeque::new();
         
         for i in 0..row{
             for j in 0..col{
-                let mut queue = VecDeque::from([(i, j)]);
+                queue.push_back((i, j));
                 
                 let mut result = false;
                 while let Some((_i , _j)) = queue.pop_front() {
