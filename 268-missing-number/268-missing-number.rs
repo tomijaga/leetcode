@@ -3,17 +3,11 @@ impl Solution {
         let mut nums = nums;
         nums.sort_unstable();
         
-        for i in 0..nums.len() -1{
-            if nums[i + 1] - nums[i] > 1{
-                return nums[i] + 1;
-            }
-        }
+        let acc_sum: i32 = nums.iter().sum();
         
-        if nums.first().unwrap() == &0{
-            (*nums.last().unwrap()) + 1
-        }else{
-            0
-        }
+        let len = nums.len();
+        let sum: i32 = (len * (len + 1) / 2) as i32;
         
+        sum - acc_sum
     }
 }
