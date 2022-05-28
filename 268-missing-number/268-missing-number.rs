@@ -3,9 +3,9 @@ impl Solution {
         let mut nums = nums;
         nums.sort_unstable();
         
-        let acc_sum: i32 = nums.iter().sum();
-        
         let len = nums.len();
+        let acc_sum: i32 = nums.into_iter().sum();
+        
         let sum: i32 = (len * (len + 1) / 2) as i32;
         
         sum - acc_sum
