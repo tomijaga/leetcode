@@ -4,7 +4,7 @@ impl Solution {
         nums.sort_unstable();
         
         let len = nums.len();
-        let acc_sum: i32 = nums.into_iter().sum();
+        let acc_sum: i32 = nums.iter().sum();
         
         let sum: i32 = (len * (len + 1) / 2) as i32;
         
