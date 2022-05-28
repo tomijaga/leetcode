@@ -11,7 +11,6 @@ impl Solution {
         
         for i in 0..row{
             for j in 0..col{
-                if grid[i][j] == '0'{continue;}
                 
                 let mut queue = VecDeque::from([(i, j)]);
                 
