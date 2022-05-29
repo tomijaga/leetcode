@@ -16,12 +16,23 @@ impl Solution {
             n = prev;
         }
         
+        
+        
         for i in 0..nums.len(){
-            for j in i+1..nums.len(){
-                let sum = nums[j] - nums[i];
-                if sum >=target{
-                    // println!("({}, {})", i, j);
-                    ans = min((j - i) as i32, ans);
+            let mut left = i + 1;
+            let mut right = nums.len();
+            
+            while (left < right){
+                let mid = left + (right - left ) /2;
+                
+                let sum = nums[mid] - nums[i];
+                
+                if sum >= target{
+                    right = mid;
+                    ans = min((mid - i) as i32, ans);
+                    
+                }else{
+                    left = mid+1;
                 }
             }
         }
