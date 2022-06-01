@@ -1,10 +1,12 @@
 impl Solution {
-    pub fn running_sum(nums: Vec<i32>) -> Vec<i32> {
+    pub fn running_sum(mut nums: Vec<i32>) -> Vec<i32> {
         let mut sum = 0;
         
-        nums.iter().map(|&a|{
-            sum += a;
-            sum
-        }).collect::<Vec<i32>>()
+        for n in nums.iter_mut(){
+            sum += *n;
+            *n = sum;
+        }
+    
+        nums
     }
 }
