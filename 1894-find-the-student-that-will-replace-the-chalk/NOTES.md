@@ -1,1 +1,2 @@
-[i - 1] - [i]
+O(n) time
+O(n) space
