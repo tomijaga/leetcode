@@ -9,7 +9,7 @@ class Solution:
         
         while(head):
             n <<=1
-            n+=head.val
+            n|=head.val
             head = head.next
 
         return n
