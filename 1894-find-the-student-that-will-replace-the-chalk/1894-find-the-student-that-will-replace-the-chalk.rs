@@ -9,12 +9,12 @@ impl Solution {
             sum
         }).collect();
         
-        println!("running sum: {:?}", &chalk);
+        // println!("running sum: {:?}", &chalk);
         
         let last = chalk.last().unwrap();
         
         let k = k as i64 % last;
-        println!("last: {:?}, k: {:?}", last, k);
+        // println!("last: {:?}, k: {:?}", last, k);
         
         
         if k == 0{
