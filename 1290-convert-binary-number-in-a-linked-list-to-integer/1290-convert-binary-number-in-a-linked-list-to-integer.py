@@ -6,16 +6,10 @@
 class Solution:
     def getDecimalValue(self, head: ListNode) -> int:
         n = 0;
-        arr = []
         
         while(head):
-            arr.append(head.val)
+            n <<=1
+            n+=head.val
             head = head.next
 
-        l = len(arr)
-        for i in range(0, len(arr)):
-            
-            bit = arr[l - i -1]
-            n  |= bit << i
-            
         return n
