@@ -41,7 +41,6 @@ impl Solution {
 }
 
 pub fn get_order(chalk:  &Vec<i64>, i: usize, k: i64)-> Ordering{
-    println!("{:?}", i);
     if i == 0{
         if chalk[0] - k > 0{
             return Ordering::Equal;
