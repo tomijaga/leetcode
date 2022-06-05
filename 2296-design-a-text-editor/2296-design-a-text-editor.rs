@@ -1,63 +1,108 @@
-use std::cmp::{min, max};
+class Node{
+    public val: string;
+    public next: Node | null = null;
+    public prev: Node | null = null;
 
-struct TextEditor {
-    left: Vec<char>,
-    right: Vec<char>
+    constructor(val:string){
+        this.val = val
+    }
 }
 
-impl TextEditor {
+class TextEditor {
+    public dummy: Node = new Node("");
+    public node: Node;
+    
+    constructor(){
+        this.node = this.dummy
+    }
 
-    fn new() -> Self {
-        Self{
-            left:vec![],
-            right:vec![]
+    addText(text: string): void {
+        let node = null
+        let prev = this.node
+        let next = prev.next
+        
+        for (const c of text){
+            node = new Node(c)
+            node.prev = prev
+            prev.next = node
+            prev = node
         }
+        
+        
+        node.next = next
+        if (next){
+            next.prev = node
+        }
+        
+        this.node = node
+
     }
-    
-    fn add_text(&mut self, text: String) {
-        for c in text.chars(){
-            self.left.push(c);
+
+    deleteText(k: number): number {
+        let i = 0;
+        let next = this.node.next;
+        
+        while (i< k && this.node!=this.dummy){
+            this.node = this.node.prev
+            i+=1
         }
+        
+        
+        this.node.next = next;
+        if (next){
+            next.prev = this.node
+        }
+        
+        return i
     }
-    
-    fn delete_text(&mut self, k: i32) -> i32 {
-        let n = min(self.left.len() as i32, k);
-        for i in 0..n{
-            self.left.pop();
+
+    cursorLeft(k: number): string {
+        let i = 0;
+        while (i < k && this.node.prev!=null && this.node!=this.dummy ){
+            this.node = this.node.prev
+            i+=1
         }
+            
         
-        n
+        let node = this.node
+        let t = ""
+        i = 0
+        
+        while(i < 10 && node != null) {
+            i+=1
+            t = node.val + t
+            node = node.prev
+        }
+        // console.log(t)
+        return t
     }
-    
-    fn cursor_left(&mut self, k: i32) -> String {
-        let n = min(self.left.len() as i32, k);
-        
-        for i in 0..n{
-            let c = self.left.pop().unwrap();
-            self.right.push(c);
+
+    cursorRight(k: number): string {
+        let i = 0;
+        while (i < k && this.node.next!=null){
+            this.node = this.node.next
+            i+=1
         }
         
-        let mut slice = &self.left[max(self.left.len() as i32 - 10, 0) as usize..];
-        slice.iter().collect::<String>()
-    }
-    
-    fn cursor_right(&mut self, k: i32) -> String {
-        let n = min(self.right.len() as i32, k);
+        let node = this.node
+        let t = ""
+        i = 0
         
-        for i in 0..n{
-            let c = self.right.pop().unwrap();
-            self.left.push(c);
+        while(i < 10 && node != null) {
+            i+=1
+            t = node.val + t
+            node = node.prev
         }
-        
-        self.cursor_left(0)
+        // console.log(t)
+        return t
     }
 }
 
 /**
  * Your TextEditor object will be instantiated and called as such:
- * let obj = TextEditor::new();
- * obj.add_text(text);
- * let ret_2: i32 = obj.delete_text(k);
- * let ret_3: String = obj.cursor_left(k);
- * let ret_4: String = obj.cursor_right(k);
+ * var obj = new TextEditor()
+ * obj.addText(text)
+ * var param_2 = obj.deleteText(k)
+ * var param_3 = obj.cursorLeft(k)
+ * var param_4 = obj.cursorRight(k)
  */
