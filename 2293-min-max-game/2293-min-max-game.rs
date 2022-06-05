@@ -1,9 +1,7 @@
 use std::cmp::{min, max};
 
 impl Solution {
-    pub fn min_max_game(nums: Vec<i32>) -> i32 {
-        let mut nums = nums;
-        
+    pub fn min_max_game(mut nums: Vec<i32>) -> i32 {
         let mut n = nums.len()/2;
         
         while n > 0{
