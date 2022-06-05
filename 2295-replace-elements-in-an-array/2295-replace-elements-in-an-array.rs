@@ -14,10 +14,7 @@ impl Solution {
             
             let i = map.remove(&old).unwrap();
             map.insert(new, i);
-        }
-        
-        for (key, i) in map{
-            nums[i] = key;
+            nums[i] = new;
         }
         
         nums
