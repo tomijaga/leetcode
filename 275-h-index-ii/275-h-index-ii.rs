@@ -24,6 +24,6 @@ impl Solution {
             }
         }
         
-        max
+        (len - r ) as i32
     }
 }
