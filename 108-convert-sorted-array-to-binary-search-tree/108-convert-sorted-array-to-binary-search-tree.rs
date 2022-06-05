@@ -4,7 +4,7 @@ use std::cell::RefCell;
 impl Solution {
     pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
         let mut dummy = TreeNode::new(-1);
-        Self::merge(&mut dummy, nums);
+        Self::merge(&mut dummy, &nums[..]);
         
         if let Some(_) = dummy.left{
             dummy.left
@@ -14,7 +14,7 @@ impl Solution {
         
     }
     
-    pub fn merge(node: &mut TreeNode,  nums: Vec<i32>){
+    pub fn merge(node: &mut TreeNode,  nums: &[i32]){
         if (nums.len() <= 0){
             return;
         }
@@ -25,8 +25,8 @@ impl Solution {
         
         let mut child = TreeNode::new(median);
         
-        let ls = nums[..median_index].to_vec();
-        let rs = nums[median_index + 1..].to_vec();
+        let ls = &nums[..median_index];
+        let rs = &nums[median_index + 1..];
         
         Self::merge(&mut child, ls);
         Self::merge(&mut child, rs);
