@@ -3,17 +3,14 @@ use std::rc::Rc;
 use std::cell::RefCell;
 impl Solution {
     pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        let median = nums.len()/2;
-        let n = nums[median];
-        let mut node = TreeNode::new(n);
+        let mut dummy = TreeNode::new(-1);
+        Self::merge(&mut dummy, nums);
         
-        let ls = nums[..median].to_vec();
-        let rs = nums[median + 1..].to_vec();
-        
-        Self::merge(&mut node, ls);
-        Self::merge(&mut node, rs);
-        
-        Self::wrap(node)
+        if let Some(_) = dummy.left{
+            dummy.left
+        }else{
+            dummy.right
+        }
         
     }
     
