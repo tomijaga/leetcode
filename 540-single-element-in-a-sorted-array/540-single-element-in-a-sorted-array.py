@@ -6,17 +6,15 @@ class Solution:
         while (l < r):
             mid = floor(l + (r - l)/2)
             
+            # reduce mid to even value
+            mid = mid - 1 if mid % 2 == 1 else mid
+            
             n = nums[mid]
             
-            if mid % 2 == 0:
-                if nums[mid + 1] == n:
-                    l = mid + 1
-                else:
-                    r = mid
+            if nums[mid + 1] == n:
+                # add 2 to avoid looping forever with an odd value
+                l = mid + 2
             else:
-                if nums[mid + 1] == n:
-                    r = mid
-                else:
-                    l = mid + 1
-                    
+                r = mid
+                
         return nums[r]
