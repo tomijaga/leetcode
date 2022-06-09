@@ -1,7 +1,6 @@
 use rand::prelude::*;
 
 struct Solution {
-    rand: ThreadRng, 
     v: Vec<i32>
 }
 
@@ -13,7 +12,6 @@ struct Solution {
 impl Solution {
 
     fn new(mut w: Vec<i32>) -> Self {
-        let mut rand = thread_rng();
         let mut sum = 0;
         for n in w.iter_mut(){
             sum +=*n;
@@ -23,13 +21,12 @@ impl Solution {
         // println!("{:?}", &w);
         
         Self{
-            rand,
             v: w
         }
     }
     
     fn pick_index(&mut self) -> i32 {
-        let rnd = self.rand.gen_range(1, *self.v.last().unwrap() + 1);
+        let rnd = thread_rng().gen_range(1, *self.v.last().unwrap() + 1);
         let rnd = rnd as i32;
         // println!("{:?}", &rnd);
         
