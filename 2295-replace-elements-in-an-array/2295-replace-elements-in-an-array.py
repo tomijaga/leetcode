@@ -8,7 +8,11 @@ class Solution:
         for [old, new] in (operations):
             i = map.pop(old)
             map[new] = i
-            nums[i] = new
+            
+        res = [0 for _ in range(0, len(map))]
         
-        return nums
+        for (n, i) in map.items():
+            res[i] = n
+        
+        return res
         
