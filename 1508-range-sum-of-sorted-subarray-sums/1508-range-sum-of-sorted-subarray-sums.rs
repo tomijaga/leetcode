@@ -25,16 +25,12 @@ impl Solution {
         let mut sum: i64 = 0;
         for i in 0..nums.len(){
             for j in i+1..nums.len(){
-                let mut n = nums[j] - nums[i];
+                let n = nums[j] - nums[i];
                 
-                if left > 1{
-                    lower_heap.push(n);
-                }
+                lower_heap.push(n);
                 
-                if lower_heap.len() >= left || left  ==1 {
-                    if left > 1{
-                        n = lower_heap.pop().unwrap();
-                    }
+                if lower_heap.len() >= left {
+                    let n = lower_heap.pop().unwrap();
                     
                     heap.push(n);
                     sum+=n as i64;
@@ -46,8 +42,8 @@ impl Solution {
             }
         }
         
-        println!("{:?}", &lower_heap); 
-        println!("{:?}", &heap); 
+        // println!("{:?}", &lower_heap); 
+        // println!("{:?}", &heap); 
         
         (sum % (10_i64.pow(9) + 7)) as i32
     }
