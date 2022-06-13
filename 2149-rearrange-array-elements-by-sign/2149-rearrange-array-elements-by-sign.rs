@@ -7,7 +7,7 @@ impl Solution {
         let mut pos = 0;
         let mut neg = 1;
         
-        for &n in nums.iter(){
+        for n in nums{
             if n >= 0{
                 res[pos] = n;
                 pos +=2;
