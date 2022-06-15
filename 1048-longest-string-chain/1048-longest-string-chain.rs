@@ -16,8 +16,8 @@ impl Solution {
                 let mut successor = bytes.clone();
                 successor.remove(i);
                 
-                if let Some(&cnt) = map.get(&successor){
-                    chain = max(cnt, chain);
+                if let Some(&succ_chain) = map.get(&successor){
+                    chain = max(succ_chain, chain);
                 }
             }
             
@@ -25,13 +25,13 @@ impl Solution {
             
         }
 
-        let (_, max_cnt) = map
+        let (_, max_chain) = map
         .into_iter()
         .max_by(|(_, n), (_, n1)|{
             n.cmp(&n1)
         })
         .unwrap();
         
-        max_cnt
+        max_chain
     }
 }
