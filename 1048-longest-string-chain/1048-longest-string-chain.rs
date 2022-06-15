@@ -26,11 +26,11 @@ impl Solution {
         }
 
         let (_, max_chain) = map
-        .into_iter()
-        .max_by(|(_, n), (_, n1)|{
-            n.cmp(&n1)
-        })
-        .unwrap();
+            .into_iter()
+            .max_by(|(_, n), (_, n1)|{
+                n.cmp(&n1)
+            })
+            .unwrap();
         
         max_chain
     }
