@@ -12,12 +12,7 @@ class Solution:
                 row +=1
             else:
                 return True
-        
-#         if matrix[row][col] == target:
-#             print('hmm')
-#             print((row, col))
-#             return True
-        
+
         return False
             
                 
