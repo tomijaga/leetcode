@@ -44,11 +44,13 @@ impl Solution {
         let mut res = 0;
         if let Some(ref node) = root {
             let node_msg = cnt_camera(&node.borrow(), &mut res);
-            (if node_msg == NodeMsg::Leaf{
-                1
+            
+            if node_msg == NodeMsg::Leaf{
+                1 + res
             }else{
-                0
-            }) + res
+                res
+            }
+            
         }else{
             0
         }
