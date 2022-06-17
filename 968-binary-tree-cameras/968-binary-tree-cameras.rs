@@ -27,19 +27,17 @@ impl Solution {
                 NodeMsg::Skip
             };
             
-            
             if l == NodeMsg::Leaf || r == NodeMsg::Leaf{
                 *res +=1;
                 NodeMsg::Camera
+                
+            }else if l == NodeMsg::Camera || r == NodeMsg::Camera {
+                NodeMsg::Skip
+                
             }else{
-                if (l == NodeMsg::Camera || r == NodeMsg::Camera) {
-                    NodeMsg::Skip
-                }else{
-                    NodeMsg::Leaf
-                }
+                NodeMsg::Leaf
             }
         }
-        
         
         let mut res = 0;
         if let Some(ref node) = root {
