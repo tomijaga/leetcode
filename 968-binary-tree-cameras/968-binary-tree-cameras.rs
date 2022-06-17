@@ -13,9 +13,6 @@ impl Solution {
     pub fn min_camera_cover(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         
         pub fn cnt_camera(node: &TreeNode, res: &mut i32) -> NodeMsg {
-            let (mut left_cnt, mut right_cnt) = (0, 0);
-            let has_child = false;
-            
             let l = if let Some(ref left) = node.left{
                 let l = left.borrow();
                 cnt_camera(&l, res)
