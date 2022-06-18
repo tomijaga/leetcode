@@ -13,3 +13,10 @@ If there wasn't any duplicates we call the recursive function on the `next` node
 ### Efficient solution
 The most efficient solution would be to use two while loops for removing duplicates
 ​
+- Create a dummy node
+- Copy the `head` to the dummy nodes `.next` pointer
+- Create a node to traverse the list (`curr` / `trav`)
+- Create a while loop that checks if the `curr` node is null
+- Nest another while loop that checks if there are duplicate values and consumes them
+- Check if the node at the cloned node is the same
+- Nest another while loop that checks if there are duplicate values and consumes them
