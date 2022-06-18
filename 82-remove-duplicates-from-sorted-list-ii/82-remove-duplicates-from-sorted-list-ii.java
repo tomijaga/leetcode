@@ -12,45 +12,30 @@
 /// Iteration over recursion
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        
         if (head == null){
             return null;
         }
-        ListNode trav = head;
-        head = null;
-        ListNode store = null;
         
-        boolean dup = false;
+        ListNode dummy = new ListNode(-1); 
+        dummy.next = head;
+        ListNode curr = head;
+        ListNode store = dummy;
         
-        while (true){
-            while (trav.next != null && trav.next.val == trav.val){
-                dup = true;
-                trav = trav.next;
+        while (curr != null){
+            while (curr.next != null && curr.next.val == curr.val){
+                curr = curr.next;
             }
             
-            if (dup){
-                trav = trav.next;
-                dup = false;
+            if (store.next == curr){
+                store = curr;
             }else{
-                if (head == null){
-                    head = trav;
-                    store = head;
-                }else{
-                    store.next = trav;
-                    store = store.next;
-                }
-                
-                trav = trav.next;
+                store.next = curr.next;
             }
             
-            if (trav == null){
-                if (store != null){
-                    store.next = null;
-                }
-                break;
-            }
+            curr = curr.next;
+            
         }
         
-        return head;
+        return dummy.next;
     }
 }
