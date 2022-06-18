@@ -10,3 +10,6 @@ Since this question requires that we remove all the node that occurs more than o
 If there was indeed a duplicate we call the recursive function on the `next` node and return its result instead of the `curr` node.
 If there wasn't any duplicates we call the recursive function on the `next` node and replace it with the result. Then we return the `curr` node
 ​
+### Efficient solution
+The most efficient solution would be to use two while loops for removing duplicates
+​
