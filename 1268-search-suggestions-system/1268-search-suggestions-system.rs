@@ -28,10 +28,16 @@ impl Solution {
             }
             
             let mut d2 = vec![];
-            // println!("{:?}", (l, r));
-            let mut cnt = 0;
-            while((l + cnt) < products.len() && products[l + cnt].starts_with(slice) && cnt < 3) {
-                d2.push(products[l + cnt].clone());
+            let mut cnt = l;
+            
+            while
+            (
+                cnt < products.len() && 
+                products[cnt].starts_with(slice) && 
+                cnt - l < 3
+            ) 
+            {
+                d2.push(products[cnt].clone());
                 cnt+=1;
             }
             
