@@ -1,41 +1,48 @@
-use std::collections::HashMap;
-use std::collections::HashSet;
-
-
-pub fn exists(nums: &Vec<Vec<i32>>, elem: &Vec<i32> ) -> bool{
-    for n in nums{
-        if (n[0]== elem[0] && n[1]== elem[1] && n[2]== elem[2]){
-            return true;
-        }
-    }
-    return false;
-}
-
 impl Solution {
-    pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
+    pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
+        nums.sort();
         
-        let mut targets = HashMap::new();
-        // let mut sum = vec![];
-        let mut sum:HashSet<Vec<i32>> = HashSet::new();
+        println!("{:?}", &nums);
+        let mut res = vec![];
         
-        for (i, n) in nums.iter().enumerate(){
-            targets.insert(n, i);
+        for i in 0..(nums.len() as i32 - 2) {
+            let i = i as usize;
+            
+            if i > 0 && nums[i - 1] == nums[i]{
+                continue;
+            }
+            
+            let mut j = i + 1;
+            let mut k = nums.len() - 1;
+            
+            while j < k{
+                let sum = nums[i] + nums[j] + nums[k];
+                // println!("{:?}, {}", [nums[i], nums[j], nums[k]], sum );
+                
+                if sum > 0{
+                    k-=1;
+                }else if sum < 0{
+                    j +=1;
+                }else{
+                    let v = vec![nums[i], nums[j], nums[k]];
+                    res.push(v);
+                    
+                    while j < k && nums[j] == nums[j + 1]{
+                        j +=1;
+                    }
+                    
+                    while j < k && nums[k] == nums[k - 1]{
+                        k-=1;
+                    }
+                    
+                    j+=1;
+                    k-=1;
+                }
+                
+            }
+            
         }
         
-        for i in 0..nums.len(){
-            for j in (i + 1)..nums.len(){
-                let target = 0 - ( nums[i] + nums[j]);
-                
-                if let Some (index) = targets.get(&target){
-                    if (i != j && j!= *index && *index!=i){
-                        let mut elem = vec![nums[*index], nums[i], nums[j]];
-                        elem.sort();
-                        sum.insert(elem);
-                    }
-                }
-            }
-        } 
-        
-        sum.into_iter().collect::<Vec<Vec<i32>>>()
+        res
     }
 }
