@@ -2,7 +2,7 @@ impl Solution {
     pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
         nums.sort();
         
-        println!("{:?}", &nums);
+        // println!("{:?}", &nums);
         let mut res = vec![];
         
         for i in 0..(nums.len() as i32 - 2) {
