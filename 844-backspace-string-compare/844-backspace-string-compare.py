@@ -3,17 +3,22 @@ class Solution:
         a = []
         b = []
         
-        for c in s:
+        skip = 0
+        for c in s[::-1]:
             if c == '#':
-                if len(a) > 0:
-                    a.pop()
+                skip +=1
+            elif skip > 0:
+                skip -=1
             else:
                 a.append(c)
                 
-        for c in t:
+        skip = 0
+                
+        for c in t[::-1]:
             if c == '#':
-                if len(b) > 0:
-                    b.pop()
+                skip +=1
+            elif skip > 0:
+                skip -=1
             else:
                 b.append(c)
         
