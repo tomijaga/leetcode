@@ -10,7 +10,6 @@ impl Solution {
         
         while i< j && j <= nums.len(){
             let n = nums[j - 1];
-            // println!("{:?}, diff: {:?},  p: {:?}", (i, j), j - i,  prod);
             
             if prod >= k{
                 prod /= nums[i];
