@@ -19,7 +19,7 @@ impl Solution {
                     prod = nums[i];
                 }
                 
-            }else if prod < k{
+            }else {
                 subs+= (j - i) as i32;
                 j+=1;
                 
