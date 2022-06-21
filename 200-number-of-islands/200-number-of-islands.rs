@@ -1,10 +1,5 @@
-use std::collections::HashSet;
-use std::collections::VecDeque;
-
 impl Solution {
-    pub fn num_islands(grid: Vec<Vec<char>>) -> i32 {
-        
-        let mut visited: HashSet<(usize, usize)> = HashSet::new();
+    pub fn num_islands(mut grid: Vec<Vec<char>>) -> i32 {
         let (row, col) = (grid.len(), grid[0].len());
         
         let mut n = 0;
@@ -12,18 +7,15 @@ impl Solution {
         for i in 0..row{
             for j in 0..col{
                 
-                let mut queue = VecDeque::from([(i, j)]);
-                
                 let mut result = false;
-                while let Some((_i , _j)) = queue.pop_front() {
-                    result |= bfs(&grid, &mut visited, &mut queue, _i, _j);
+
+                if grid[i][j] == '1'{
+                    result |= dfs(&mut grid, i, j);
+                    if result {
+                        n+=1;
+                    }
                 }
                 
-                // println!("(i: {:?}, j: {:?}) result: {:?}", _i, )
-                
-                if result {
-                    n+=1;
-                }
             }
         }
         
@@ -31,19 +23,19 @@ impl Solution {
     }
 }
 
-pub fn bfs(grid: &Vec<Vec<char>>, visited: &mut HashSet<(usize, usize)>, queue: &mut VecDeque<(usize, usize)>, i: usize, j: usize) -> bool {
+pub fn dfs(grid: &mut Vec<Vec<char>>, i: usize, j: usize) -> bool {
     let (row, col) = (grid.len(), grid[0].len());
     
-    if (!(0..row).contains(&i) || !(0..col).contains(&j) || visited.contains(&(i, j)) || grid[i][j] == '0'){
+    if (!(0..row).contains(&i) || !(0..col).contains(&j) ||  grid[i][j] != '1') {
         return false;
     }
+
+    grid[i][j] = '#';
     
-    queue.push_back((i+1, j));
-    queue.push_back((i-1, j));
-    queue.push_back((i, j-1));
-    queue.push_back((i, j+1));
-    
-    visited.insert((i, j));
+    dfs(grid, i+1, j);
+    dfs(grid, i-1, j);
+    dfs(grid, i, j-1);
+    dfs(grid, i, j+1);
     
     return true;
 }
