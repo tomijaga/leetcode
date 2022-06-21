@@ -3,8 +3,6 @@ from collections import deque
 class Solution:
     
     def numIslands(self, grid: List[List[str]]) -> int:
-        visited = set()
-        q = deque()
         num = 0
         
         for i in range(0, len(grid)):
