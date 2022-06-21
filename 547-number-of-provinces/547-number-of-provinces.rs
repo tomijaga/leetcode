@@ -1,38 +1,39 @@
+use std::collections::HashSet;
+
 impl Solution {
     pub fn find_circle_num(mut grid: Vec<Vec<i32>>) -> i32 {
-        let (m, n) = (grid.len(), grid[0].len());
+        let mut visited = HashSet::new();
+        
+        let n = grid.len();
+        
         let mut cnt = 0;
         
-        for i in 0..m{
-            for j in 0..n{
-                if grid[i][j] == 1{
-                    if dfs(&mut grid, i, j){
-                        cnt += 1;
-                    }
+        for i in 0..n{
+            if !visited.contains(&i){
+                if dfs(&mut grid, &mut visited, i){
+                    cnt += 1;
                 }
             }
         }
-        
         cnt
     }
 }
 
-pub fn dfs(grid: &mut Vec<Vec<i32>>, i: usize, j: usize) -> bool {
-    let (m, n) = (grid.len(), grid[0].len());
+pub fn dfs(grid: &mut Vec<Vec<i32>>, visited:&mut HashSet<usize>, i: usize) -> bool {
+    let n = grid.len();
     
-    if i == usize::MAX || i >= m || j == usize::MAX || j >= n || grid[i][j] !=1{
+    if visited.contains(&i) {
         return false;
     }
     
-    grid[i][j] = 3;
+    visited.insert(i);
     
     for j in 0..n{
-        dfs(grid, i, j);
+        if grid[i][j] == 1 {
+            dfs(grid, visited, j);
+        }
     }
-    
-    for i in 0..m{
-        dfs(grid, i, j);
-    }
-    
+    // grid[i][j] = 3;
+
     return true;
 }
