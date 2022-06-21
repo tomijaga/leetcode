@@ -6,12 +6,8 @@ impl Solution {
         
         for i in 0..row{
             for j in 0..col{
-                
-                let mut result = false;
-
                 if grid[i][j] == '1'{
-                    result |= dfs(&mut grid, i, j);
-                    if result {
+                    if dfs(&mut grid, i, j) {
                         n+=1;
                     }
                 }
@@ -26,7 +22,7 @@ impl Solution {
 pub fn dfs(grid: &mut Vec<Vec<char>>, i: usize, j: usize) -> bool {
     let (row, col) = (grid.len(), grid[0].len());
     
-    if (!(0..row).contains(&i) || !(0..col).contains(&j) ||  grid[i][j] != '1') {
+    if ( i < 0 || j < 0 || i>= row || j >= col || grid[i][j] != '1') {
         return false;
     }
 
