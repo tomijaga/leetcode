@@ -21,11 +21,9 @@ class Solution:
             return False
         
         if point in visited or grid[i][j] == '0':
-            # print(visited)
-            # print(grid[i][j], "visited" if (i, j) in visited else "unknown")
             return False
         
-        print(True, (i, j))
+        # print(True, (i, j))
         visited.add(point)
         
         q.append((i - 1, j))
