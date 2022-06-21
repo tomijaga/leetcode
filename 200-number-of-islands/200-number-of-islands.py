@@ -24,7 +24,7 @@ class Solution:
         if grid[i][j] != '1':
             return False
         
-        print(True, (i, j))
+        # print(True, (i, j))
         
         # mark as visited
         grid[i][j] = '#'
