@@ -23,47 +23,18 @@ type OptRefTreeNode = Option<Rc<RefCell<TreeNode>>>;
 impl Solution {
     pub fn is_subtree(root: Option<Rc<RefCell<TreeNode>>>, sub_root: Option<Rc<RefCell<TreeNode>>>) -> bool {
         
-        fn both_match(node: &Option<Rc<RefCell<TreeNode>>>, sub: &Option<Rc<RefCell<TreeNode>>>)-> bool{
-            if node.is_some() && sub.is_some(){
+        if (root == sub_root){
+            true
+        }else{
+            if let Some(ref node) = root{
+                let node = node.borrow();
                 
-                let un_node = &node.clone().unwrap();
-                let un_sub = &sub.clone().unwrap();
-                
-                let node = un_node.borrow();
-                let sub = un_sub.borrow();
-                
-                
-                if node.val == sub.val{
-                    both_match(&node.left, &sub.left) &&
-                    both_match(&node.right, &sub.right)
-                }else{
-                    false
-                }
-                
-            }else if node.is_none() && sub.is_none(){
-                true
+                Self::is_subtree(node.left.clone(), sub_root.clone()) || 
+                Self::is_subtree(node.right.clone(), sub_root.clone())
             }else{
                 false
             }
         }
         
-        fn has_a_match(node: &Option<Rc<RefCell<TreeNode>>>, sub: &Option<Rc<RefCell<TreeNode>>>, has_match: &mut bool){
-            if both_match(node, sub){
-                *has_match = true;
-                return;
-            }else{
-                if let Some(ref n) = node{
-                    let n = n.borrow();
-                    
-                    has_a_match(&n.left, sub, has_match);
-                    has_a_match(&n.right, sub, has_match);
-                }
-            }
-        }
-        
-        let mut has_match = false;
-        
-        has_a_match(&root, &sub_root, &mut has_match);
-        has_match
     }
 }
