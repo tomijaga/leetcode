@@ -16,25 +16,30 @@
 //     }
 //   }
 // }
+
 use std::rc::Rc;
 use std::cell::RefCell;
-type OptRefTreeNode = Option<Rc<RefCell<TreeNode>>>;
+
+type OptTreeNode = Option<Rc<RefCell<TreeNode>>>;
 
 impl Solution {
-    pub fn is_subtree(root: Option<Rc<RefCell<TreeNode>>>, sub_root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+    pub fn is_subtree(root: OptTreeNode, sub_root: OptTreeNode) -> bool {
         
-        if (root == sub_root){
-            true
-        }else{
-            if let Some(ref node) = root{
-                let node = node.borrow();
-                
-                Self::is_subtree(node.left.clone(), sub_root.clone()) || 
-                Self::is_subtree(node.right.clone(), sub_root.clone())
+        fn has_match(root: &OptTreeNode, sub: &OptTreeNode) -> bool{
+            if (root == sub){
+                true
             }else{
-                false
+                if let Some(ref node) = root{
+                    let node = node.borrow();
+                    
+                    has_match(&node.left, &sub) || 
+                    has_match(&node.right, &sub)
+                }else{
+                    false
+                }
             }
         }
         
+        has_match(&root, &sub_root)
     }
 }
