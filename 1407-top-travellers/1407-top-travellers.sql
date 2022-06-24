@@ -1,4 +1,4 @@
-select u.name as name, if(t.distance is not null, t.distance, 0) as travelled_distance
+select u.name as name, ifnull(t.distance, 0) as travelled_distance
 from users u
 left join 
     (select user_id as id, sum(distance) as distance
