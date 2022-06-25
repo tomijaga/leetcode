@@ -1,2 +1,7 @@
-select e.employee_id, (select count(team_id) from Employee where e.team_id = team_id) as team_size
-from Employee e
+select employee_id, cnt as team_size
+from employee e
+inner join 
+    (select team_id, count(*) as cnt
+    from employee
+    group by team_id) t
+on e.team_id = t.team_id
