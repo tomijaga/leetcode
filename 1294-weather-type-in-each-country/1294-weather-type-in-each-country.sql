@@ -5,7 +5,8 @@ select
         if(average>=25, 
             "Hot",
             "Warm")) as weather_type
-from countries c,
+from countries c
+inner join
     (select country_id, avg(weather_state) as average
     from weather
     where day like "2019-11%"
