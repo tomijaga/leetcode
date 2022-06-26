@@ -15,7 +15,7 @@ impl Solution {
         }
         
         card_points.push(total);
-        println!("{:?}", &card_points);
+        // println!("{:?}", &card_points);
         
         let window = len - k;
         let mut max_points = 0;
