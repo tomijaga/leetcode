@@ -1,8 +1,5 @@
 select 
     request_at as day,
-    # status,
-    # d.banned,
-    # c.banned
     round(avg(if(status like "cancelled_by_driver", 
            if(d.banned like "Yes", 0, 1),
            if(status like "cancelled_by_client",
