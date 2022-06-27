@@ -6,10 +6,10 @@ impl Solution {
             return vec![];
         }
         
-        let mut set: HashSet<Vec<i32>> = HashSet::new();
+        let mut res = vec![];
         let mut store: HashSet<Vec<i32>> = HashSet::new();
         
-        fn cbns(set: &mut HashSet<Vec<i32>>, store: &mut HashSet<Vec<i32>>, candidates: &[i32], tuple:(Vec<i32>, i32), target: i32){
+        fn cbns(res: &mut Vec<Vec<i32>>, store: &mut HashSet<Vec<i32>>, candidates: &[i32], tuple:(Vec<i32>, i32), target: i32){
             if candidates.len() == 0{
                 return;
             }
@@ -23,7 +23,7 @@ impl Solution {
                     let mut new_nums = nums.clone();
                     new_nums.push(n);
                     
-                    println!("{:?}", (&new_nums, sum));
+                    // println!("{:?}", (&new_nums, sum));
                     new_nums.sort_unstable();
                     if store.contains(&new_nums){
                         continue;
@@ -32,19 +32,19 @@ impl Solution {
                     }
                     
                     if sum == target{
-                        set.insert(new_nums);
+                        res.push(new_nums);
                     }else{
                         let j = i + 1;
                         if j < candidates.len(){
-                            cbns(set, store, &candidates[j..], (new_nums, sum), target);
+                            cbns(res, store, &candidates[j..], (new_nums, sum), target);
                         }
                     }
                 }
             }
         }
         
-        cbns(&mut set, &mut store, &candidates, (vec![], 0), target );
+        cbns(&mut res, &mut store, &candidates, (vec![], 0), target );
         
-        set.into_iter().collect::<Vec<Vec<i32>>>()
+        res
     }
 }
