@@ -19,7 +19,6 @@ impl Solution {
             }
             
             if set.contains(&n){
-                println!("{:?}", n);
                 n-=1;
                 count+=1;
                 v.push(n);
