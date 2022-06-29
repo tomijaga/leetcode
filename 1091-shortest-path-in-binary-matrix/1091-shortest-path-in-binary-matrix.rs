@@ -1,7 +1,5 @@
 use std::collections::VecDeque;
 
-type Point = (usize, usize);
-
 impl Solution {
     pub fn shortest_path_binary_matrix(mut grid: Vec<Vec<i32>>) -> i32 {
         let (m, n) = (grid.len(), grid[0].len());
@@ -32,7 +30,8 @@ impl Solution {
             }
         }
         
-        // if 
+        // if the last grid was never visited
+        // return -1
         if grid[m- 1][n - 1] != 3  {
             -1
         }else{
