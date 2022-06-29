@@ -32,7 +32,8 @@ impl Solution {
             }
         }
         
-        if path == 0 || grid[m- 1][n - 1] != 3  {
+        // if 
+        if grid[m- 1][n - 1] != 3  {
             -1
         }else{
             path
