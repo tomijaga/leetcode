@@ -1,28 +1,40 @@
+use std::collections::HashMap;
+
 impl Solution {
     pub fn letter_combinations(digits: String) -> Vec<String> {
-        let arr= ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"];
-        let mut stack =  vec![];
+        let mut map = HashMap::from([
+            ('2', vec!['a', 'b', 'c']),
+            ('3', vec!['d', 'e', 'f']),
+            ('4', vec!['g', 'h', 'i']),
+            ('5', vec!['j', 'k', 'l']),
+            ('6', vec!['m', 'n', 'o']),
+            ('7', vec!['p', 'q', 'r', 's']),
+            ('8', vec!['t', 'u', 'v']),
+            ('9', vec!['w', 'x', 'y', 'z'])
+        ]);
         
-        for c in digits.chars(){
-            let n = c.to_digit(10).unwrap() as usize;
-            let chars = arr[n - 2];
-            
-            let mut new_stack = vec![];
-            for c in chars.chars(){
+        let mut res = vec![];
+        let digits: Vec<char> = digits.chars().collect();
+        
+        cbns(&digits, &map, &mut res, String::new());
+        
+        res
+    }
+}
 
-                if stack.len() > 0{
-                    for combo in stack.iter(){
-                        let mut s = String::from(combo);
-                        s.push(c);
-                        new_stack.push(s);
-                    }
-                }else{
-                    new_stack.push(c.to_string());
-                }
-            }
-            stack = new_stack;
-        } 
+pub fn cbns(digits: &[char], map: &HashMap<char, Vec<char>>, res: &mut Vec<String>, nums: String){
+    if digits.len() == 0{
+        if nums.len() > 0{
+            res.push(nums);
+        }
+        return;
+    }
+    let n = digits[0];
+    
+    for &c in map.get(&n).unwrap(){
+        let mut new_nums = nums.clone();
+        new_nums.push(c);
         
-        stack
+        cbns(&digits[1..], map, res, new_nums);
     }
 }
