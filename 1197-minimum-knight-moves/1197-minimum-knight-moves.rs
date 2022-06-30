@@ -8,7 +8,6 @@ impl Solution {
         let mut visited = HashSet::new();
         let mut q = VecDeque::from([(0, 0)]);
         
-        let len = 8;
         let mut n = 0;
         
         while !q.is_empty(){
@@ -21,36 +20,32 @@ impl Solution {
                     return n;
                 }
                 
-                bfs(&mut visited, &mut q, i, j);
+                if i>=-1 && j>=-1 && !visited.contains(&(i, j)){
+        
+                    visited.insert((i,j));
+                    
+                    let opts = [
+                        (i + 2, j - 1),
+                        (i + 2, j + 1),
+                        (i - 2, j - 1),
+                        (i - 2, j + 1),
+                        (i + 1, j - 2),
+                        (i + 1, j + 2),
+                        (i - 1, j - 2),
+                        (i - 1, j + 2)
+                    ];
+
+                    for (x,y) in opts{
+                        q.push_back((x, y));
+                    }
+                    
+                }
+                
             }
             
             n+=1;
         }
         
         unreachable!()
-    }
-}
-
-pub fn bfs(visited: &mut HashSet<Point>,q: &mut VecDeque<Point>, i: i32, j:i32){
-    
-    if i>=-1 && j>=-1 && !visited.contains(&(i, j)){
-        
-        visited.insert((i,j));
-        
-        let opts = [
-            (i + 2, j - 1),
-            (i + 2, j + 1),
-            (i - 2, j - 1),
-            (i - 2, j + 1),
-            (i + 1, j - 2),
-            (i + 1, j + 2),
-            (i - 1, j - 2),
-            (i - 1, j + 2)
-        ];
-
-        for (x,y) in opts{
-            q.push_back((x, y));
-        }
-        
     }
 }
