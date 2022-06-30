@@ -4,6 +4,7 @@ type Point = (i32,i32);
 
 impl Solution {
     pub fn min_knight_moves(x: i32, y: i32) -> i32 {
+        let (x, y) = (x.abs(), y.abs());
         let mut visited = HashSet::new();
         let mut q = VecDeque::from([(0, 0)]);
         
@@ -32,7 +33,7 @@ impl Solution {
 
 pub fn bfs(visited: &mut HashSet<Point>,q: &mut VecDeque<Point>, i: i32, j:i32){
     
-    if !visited.contains(&(i, j)){
+    if i>=-1 && j>=-1 && !visited.contains(&(i, j)){
         
         visited.insert((i,j));
         
