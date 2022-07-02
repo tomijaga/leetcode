@@ -1,79 +1,58 @@
-use std::collections::HashMap;
-
-#[derive(Debug)]
-struct Node(HashMap<char, Node>, bool);
-
-#[derive(Debug)]
-struct Trie {
-    data: HashMap<char, Node>
+#[derive(Debug, Clone, Default)]
+struct Trie{
+    is_end: bool,
+    children: [Option<Box<Trie>>; 26]
 }
 
-/** 
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl Trie {
 
     fn new() -> Self {
-        Self{
-            data: HashMap::new()
-        }
+        Default::default()
     }
     
     fn insert(&mut self, word: String) {
-        let mut data = &mut self.data;
-        let len = word.len();
-        let w = word.clone();
+        let mut curr = self;
         
-        for (i, c) in word.chars().enumerate(){
+        for c in word.chars().map(|c|{ id(c) }){
+            let mut t = Trie::new();
             
-            if !data.contains_key(&c){
-                data.insert(c, Node(HashMap::new(), i == len - 1));
-            }else{
-                if i == len - 1{
-                    data.get_mut(&c).unwrap().1 = true;
-                }
-                // println!("{:?}", (&w, c));
-            }
-            data = &mut data.get_mut(&c).unwrap().0;
+            curr = curr.children[c].get_or_insert(Box::new(t)).as_mut();
         }
         
-        // println!("{:#?}", &self.data);
+        curr.is_end = true;
     }
     
     fn search(&self, word: String) -> bool {
-        let mut data = (&self.data, false);
+        let mut curr = self;
         
-        for c in word.chars(){
-            if !data.0.contains_key(&c){
+        for c in word.chars().map(|c|{ id(c) }){
+            
+            if let Some(ref node) = curr.children[c]{
+                curr = node.as_ref();
+            }else{
                 return false;
             }
-            let ref_data = &data.0.get(&c).unwrap();
-            data = (&ref_data.0, ref_data.1);
         }
         
-        return data.1;
+        return curr.is_end;
     }
     
     fn starts_with(&self, prefix: String) -> bool {
-        let mut data = &self.data;
+        let mut curr = self;
         
-        for c in prefix.chars(){
-            if !data.contains_key(&c){
+        for c in prefix.chars().map(|c|{ id(c) }){
+            
+            if let Some(ref node) = curr.children[c]{
+                curr = node.as_ref();
+            }else{
                 return false;
             }
-            let ref_data = &data.get(&c).unwrap();
-            data = &ref_data.0;
         }
         
         return true;
     }
 }
 
-/**
- * Your Trie object will be instantiated and called as such:
- * let obj = Trie::new();
- * obj.insert(word);
- * let ret_2: bool = obj.search(word);
- * let ret_3: bool = obj.starts_with(prefix);
- */
+pub fn id(c: char) -> usize {
+    c as usize - 'a' as usize
+}
