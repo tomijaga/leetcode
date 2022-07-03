@@ -2,16 +2,14 @@ use std::collections::HashMap;
 
 impl Solution {
     pub fn decode_message(key: String, message: String) -> String {
-        let mut i:usize = 0;
+        let mut i:u8 = 0;
         
-        let mut map = vec!['-'; 26];
+        let mut map = vec![0; 26];
         let mut message = message.chars().collect::<Vec<char>>();    
         
-        let mut alphabets:Vec<char> = "abcdefghijklmnopqrstuvwxyz".chars().collect();
-        
         for c in key.chars(){
-            if c != ' ' && map[id(c)] == '-'{
-                map[id(c)] = alphabets[i];
+            if c != ' ' && map[id(c)] == 0{
+                map[id(c)] = i + 97;
                 i+=1;
             }
             
@@ -25,7 +23,7 @@ impl Solution {
                 continue;
             }
             
-            *c = map[id(*c)];
+            *c = map[id(*c)] as char;
         }
         message.into_iter().collect::<String>()
     }
