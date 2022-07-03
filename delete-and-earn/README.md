@@ -1,3 +1,4 @@
+[Discussion Post (created on 3/6/2022 at 6:8)](https://leetcode.com/problems/delete-and-earn/discuss/2231775/Rust-or-BTreeMap-or-Two-Pointers)  
 <h2>  Delete and Earn</h2><hr><div><p>You are given an integer array <code>nums</code>. You want to maximize the number of points you get by performing the following operation any number of times:</p>
 
 <ul>
