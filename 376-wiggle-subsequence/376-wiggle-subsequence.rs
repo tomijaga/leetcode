@@ -5,15 +5,23 @@ impl Solution {
         }
         
         let mut max = 1;
-        let mut s = 0;
+        let mut peak = false;
+        let mut first = true;
         
         for i in 1..nums.len(){
-            if nums[i] < nums[i - 1] && s != -1{
-                s = -1;
+            if nums[i] < nums[i - 1] && (peak == true || first == true){
+                // println!("peak", );
+                
+                peak = false;
                 max+=1;
-            }else if nums[i] > nums[i-1] && s != 1{
-                s = 1;
+                first = false;
+                
+            }else if nums[i] > nums[i-1] && (peak == false || first == true){
+                // println!("valley");
+                peak = true;
                 max += 1;
+                first = false;
+                
             }
         }
         
