@@ -14,7 +14,7 @@ impl Solution {
         let mut prev = (-1, 0);
         let mut twoPrev = prev;
         
-        for (i, (&n, &total)) in map.iter().enumerate(){
+        for (i, (n, total)) in map.into_iter().enumerate(){
             if i == 0{
                 prev = (n, total);
                 continue;
