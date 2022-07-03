@@ -10,36 +10,30 @@ impl Solution {
     
         
         let mut memo = vec![0; map.len()];
-        let mut twoPrev = -1;
-        let mut prev = -1;
-        let mut max = 0;
-        
-        for (i, (&n, &total)) in map.clone().iter().enumerate(){
-            if i == 0{
-                prev = n;
-                continue;
-            }
-            
-            if prev + 1 == n{
-                let one = *map.get(&prev).unwrap();
-                let two = if twoPrev > 0{
-                    *map.get(&twoPrev).unwrap()
-                }else{
-                    0
-                };
-                
-                map.insert(n, (two + total).max(one));
-            }else{
-                let one = *map.get(&prev).unwrap();
-                map.insert(n, one + total);
-            }
-            
-            twoPrev = prev;
-            prev = n;
-        }
+        let mut twoPrev = (-1, 0);
+        let mut prev = (-1, 0);
         
         // println!("{:?}", &map);
         
-        *map.get(&prev).unwrap()
+        for (i, (&n, &total)) in map.iter().enumerate(){
+            if i == 0{
+                prev = (n, total);
+                continue;
+            }
+            // println!("{:?}", (&prev, &twoPrev));
+            let tmp = prev;
+            
+            prev = if prev.0 + 1 == n{
+                (n, (twoPrev.1 + total).max(prev.1))
+            }else{
+                (n, prev.1 + total)
+            };
+            
+            twoPrev = tmp;
+                
+        }
+        // println!("{:?}", (&prev, &twoPrev));
+        
+        prev.1
     }
 }
