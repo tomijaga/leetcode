@@ -1,3 +1,7 @@
+//  time compexity : O(n)
+// space compexity : O(n)
+
+
 impl Solution {
     pub fn min_cost_climbing_stairs(cost: Vec<i32>) -> i32 {
         if cost.len() == 1{
