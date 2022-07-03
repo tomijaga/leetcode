@@ -1,3 +1,6 @@
+//  time complexity : O(n log n)
+// space complexity : O(n)
+
 use std::collections::BTreeMap;
 
 impl Solution {
@@ -7,20 +10,16 @@ impl Solution {
         for n in nums{
             *map.entry(n).or_insert(0)+= n;
         }
-    
         
-        let mut memo = vec![0; map.len()];
-        let mut twoPrev = (-1, 0);
         let mut prev = (-1, 0);
-        
-        // println!("{:?}", &map);
+        let mut twoPrev = prev;
         
         for (i, (&n, &total)) in map.iter().enumerate(){
             if i == 0{
                 prev = (n, total);
                 continue;
             }
-            // println!("{:?}", (&prev, &twoPrev));
+
             let tmp = prev;
             
             prev = if prev.0 + 1 == n{
@@ -30,9 +29,7 @@ impl Solution {
             };
             
             twoPrev = tmp;
-                
         }
-        // println!("{:?}", (&prev, &twoPrev));
         
         prev.1
     }
