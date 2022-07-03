@@ -1,3 +1,6 @@
+//  time complexity : O(n)
+// space complexity : O(n)
+
 class Solution {
     public int tribonacci(int n) {
         if (n < 2){
