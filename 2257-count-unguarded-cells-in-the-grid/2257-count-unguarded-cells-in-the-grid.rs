@@ -1,12 +1,17 @@
+//  matrix cell indicators:
+        //      0 - not guarded
+        //      1 - guarded
+        //      2 - guard
+        //      3 - wall
+
 use std::cmp::max;
 
 impl Solution {
     pub fn count_unguarded(m: i32, n: i32, guards: Vec<Vec<i32>>, walls: Vec<Vec<i32>>) -> i32 {
-        //  cell indicators:
-        //      0 - not guarded
-        //      1 - guarded
-        //      7 - guard
-        //      10 - wall
+        
+        let (UNGUARDED, GUARDED, GUARD, WALL) = (0, 1, 2, 3);
+        
+        let mut cnt = (m * n) - guards.len() as i32 - walls.len() as i32;
         
         let mut matrix: Vec<Vec<i32>> = vec![vec![0; n as usize]; m as usize];
         
@@ -14,82 +19,47 @@ impl Solution {
             let i = wall[0] as usize;
             let j = wall[1]  as usize;
             
-            matrix[i][j] = 10;
+            matrix[i][j] = WALL;
         }
         
         for guard in guards.iter(){
             let i = guard[0]  as usize;
             let j = guard[1]  as usize;
             
-            matrix[i][j] = 7;
+            matrix[i][j] = GUARD;
         }
+        
+        let dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)];
+        
+        // For every guard change all unguarded cells 
+        // in all four cardinal directions from it to
+        // guarded cells.
+        // Stop this process if it encounters another 
+        // guard or a wall
         
         for guard in guards{
-            let i = guard[0]  as usize;
-            let j = guard[1]  as usize;
+            for &(dx, dy) in dirs.iter(){
+                let mut x = guard[0] + dx;
+                let mut y = guard[1] + dy; 
+                
+                while x >= 0 && y >= 0 && x<m && y<n {
+                    let (i,j) = (x as usize, y as usize);
+                    
+                    if matrix[i][j] == WALL || matrix[i][j] == GUARD{
+                        break;
+                    }
+                    
+                    if matrix[i][j] == UNGUARDED{
+                        cnt -=1;
+                    }
+                    matrix[i][j] = GUARDED;
+                    x += dx;
+                    y += dy;
+                } 
+            }
             
-            guard_cells(&mut matrix, i, j);
         }
         
-        let mut n = 0;
-        
-        for i in 0..matrix.len(){
-            for j in 0..matrix[0].len(){
-                if matrix[i][j] == 0{
-                    n+=1;
-                }
-            }
-        }
-        
-        n
+        cnt
     }
-}
-
-pub fn guard_cells(matrix: &mut Vec<Vec<i32>>, i: usize, j: usize){
-    
-    fn guard_cell(matrix: &mut Vec<Vec<i32>>, i: usize, j:usize)-> bool{
-        if(i < matrix.len() && j < matrix[0].len() && i >= 0 && j >= 0){
-            if (matrix[i][j] == 10 || matrix[i][j] == 7){
-                return false;
-            }else {
-                matrix[i][j] = 1;
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    let mut dir = [true;4]; // [↑, ↓, <-, ->]
-    
-    for diff in 1..max(matrix.len(), matrix[0].len()){
-        if dir[0]{
-            if !guard_cell(matrix, i-diff, j){
-                dir[0] = false;
-            }
-        }
-        
-        if dir[1]{
-            if !guard_cell(matrix, i+diff, j){
-                dir[1] = false;
-            }
-        }
-        
-        if dir[2]{
-            if !guard_cell(matrix, i, j - diff){
-                dir[2] = false;
-            }
-        }
-        
-        if dir[3]{
-            if !guard_cell(matrix, i, j + diff){
-                dir[3] = false;
-            }
-        }
-        
-        if dir == [false;4]{
-            break;
-        }
-    }
-    
 }
