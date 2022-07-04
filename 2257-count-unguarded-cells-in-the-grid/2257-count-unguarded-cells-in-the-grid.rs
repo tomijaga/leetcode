@@ -1,8 +1,5 @@
-//  matrix cell indicators:
-        //      0 - not guarded
-        //      1 - guarded
-        //      2 - guard
-        //      3 - wall
+//  time complexity -> O(m * n)
+// space complexity -> O(m * n)
 
 use std::cmp::max;
 
@@ -34,9 +31,8 @@ impl Solution {
         // For every guard change all unguarded cells 
         // in all four cardinal directions from it to
         // guarded cells.
-        // Stop this process if it encounters another 
+        // This process is stopped if it encounters another 
         // guard or a wall
-        
         for guard in guards{
             for &(dx, dy) in dirs.iter(){
                 let mut x = guard[0] + dx;
