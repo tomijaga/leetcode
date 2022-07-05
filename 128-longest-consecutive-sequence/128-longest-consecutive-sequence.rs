@@ -1,47 +1,20 @@
-use std::{
-    collections::HashSet,
-    iter::FromIterator,
-    
-};
-
 impl Solution {
     pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
-        let mut set : HashSet<i32> = HashSet::from_iter(nums.into_iter());
-        
-        let mut max_cnt = 0;
-        
-        while set.len() > 0{
-            if let Some(&n) = set.iter().next(){
-                let mut cnt = 1;
-                
-                set.remove(&n);
-                dfs(&mut set, &mut (cnt), 0, n);
-                
-                max_cnt = max_cnt.max(cnt);
+        use std::collections::HashSet;
+
+        let set = nums.into_iter().collect::<HashSet<i32>>();
+        let mut longest = 0;
+        for num in &set {
+            if !set.contains(&(*num - 1)) {
+                let mut curr = *num;
+                let mut longer = 1;
+                while set.contains(&(curr + 1)) {
+                    curr += 1;
+                    longer += 1;
+                }
+                longest = std::cmp::max(longest, longer)
             }
         }
-        
-        max_cnt
-    }
-}
-
-pub fn dfs(set: &mut HashSet<i32>, cnt: &mut i32, dir: i32, n: i32){
-    
-    if dir != 2{
-        let new_n = n+1;
-        if set.contains(&new_n){
-            *cnt += 1;
-            set.remove(&new_n);
-            dfs(set, cnt, 1, new_n);
-        }
-    }
-    
-    if dir != 1{
-        let new_n = n - 1;
-        if set.contains(&new_n){
-            *cnt += 1;
-            set.remove(&new_n);
-            dfs(set, cnt, 2, new_n);
-        }
+        longest
     }
 }
