@@ -4,12 +4,12 @@ class Solution:
     def minimumAverageDifference(self, nums: List[int]) -> int:
         size = len(nums)
 
-        prefix_sum = list(accumulate(nums))
-        total = prefix_sum[-1]
+        nums[::] = list(accumulate(nums))
+        total = nums[-1]
         
         min_tuple = [0, sys.maxsize]
         
-        for (i, n) in enumerate(prefix_sum):
+        for (i, n) in enumerate(nums):
             i = i + 1
             avg_i = floor(n/i)
             
