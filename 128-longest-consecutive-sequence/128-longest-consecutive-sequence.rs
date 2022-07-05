@@ -12,36 +12,29 @@ impl Solution {
         
         while set.len() > 0{
             if let Some(&n) = set.iter().next(){
+                set.remove(&n);
+                
                 let mut cnt = 1;
                 
-                set.remove(&n);
-                dfs(&mut set, &mut (cnt), 0, n);
+                let mut curr = n + 1;
+                while set.contains(&curr){
+                    curr+=1;
+                    cnt +=1;
+                    set.remove(&n);
+                }
+                
+                curr = n - 1;
+                while set.contains(&curr){
+                    curr-=1;
+                    cnt+=1;
+                    set.remove(&n);
+                }
                 
                 max_cnt = max_cnt.max(cnt);
+
             }
         }
         
         max_cnt
-    }
-}
-
-pub fn dfs(set: &mut HashSet<i32>, cnt: &mut i32, dir: i32, n: i32){
-    
-    if dir != 2{
-        let new_n = n+1;
-        if set.contains(&new_n){
-            *cnt += 1;
-            set.remove(&new_n);
-            dfs(set, cnt, 1, new_n);
-        }
-    }
-    
-    if dir != 1{
-        let new_n = n - 1;
-        if set.contains(&new_n){
-            *cnt += 1;
-            set.remove(&new_n);
-            dfs(set, cnt, 2, new_n);
-        }
     }
 }
