@@ -11,7 +11,7 @@ impl Solution {
         let mut max_cnt = 0;
         
         while set.len() > 0{
-            if let Some(&n) = set.iter().next(){
+            let n = *set.iter().next().unwrap();
                 set.remove(&n);
                 
                 let mut cnt = 1;
@@ -32,7 +32,6 @@ impl Solution {
                 
                 max_cnt = max_cnt.max(cnt);
 
-            }
         }
         
         max_cnt
