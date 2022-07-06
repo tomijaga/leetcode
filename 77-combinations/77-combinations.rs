@@ -2,7 +2,7 @@ impl Solution {
     pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
         fn cbns(start: i32, end: i32, res:&mut Vec<Vec<i32>>, nums: &mut Vec<i32>, k: usize){
             if nums.len() == k{
-                res.push(nums.to_vec());
+                res.push(nums.clone());
                 return;
             }
             
