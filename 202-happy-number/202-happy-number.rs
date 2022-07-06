@@ -6,13 +6,7 @@ impl Solution {
         
         while !set.contains(&n){
             set.insert(n);
-            let s = n.to_string();
-            
-            n = s.split("").map(|c|{
-                c.parse::<i32>()
-                .unwrap_or_default()
-                .pow(2)
-            }).sum();
+            n = split_digits_sum(n);
             
             // println!("n: {:?}", n);
             if n == 1{
@@ -22,4 +16,15 @@ impl Solution {
         
         false
     }
+}
+
+pub fn split_digits_sum(num: i32)-> i32{
+    let mut num = num;
+    let mut sum = 0_i32;
+    while num > 0{
+        sum += (num % 10).pow(2);
+        num/=10;
+    }
+    
+    sum
 }
