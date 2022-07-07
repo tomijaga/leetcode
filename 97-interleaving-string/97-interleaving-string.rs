@@ -1,17 +1,17 @@
 impl Solution {
     pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {
-        let mut s1: Vec<char> = s1.chars().rev().collect();
-        let mut s2: Vec<char> = s2.chars().rev().collect();
+        let s1: Vec<char> = s1.chars().collect();
+        let s2: Vec<char> = s2.chars().collect();
         
-        let mut s3: Vec<char> = s3.chars().collect();
+        let s3: Vec<char> = s3.chars().collect();
         
         let mut memo = vec![vec![-1; s2.len() + 1]; s1.len() + 1];
         
-        interleave(&s3, &mut s1, &mut s2, &mut memo)
+        interleave(&s3, &s1, &s2, &mut memo)
     }
 }
 
-pub fn interleave(s3: &[char], s1: &mut Vec<char>, s2: &mut Vec<char>, memo: &mut Vec<Vec<i32>>) -> bool {
+pub fn interleave(s3: &[char], s1: &[char], s2: &[char], memo: &mut Vec<Vec<i32>>) -> bool {
     if s3.len() == 0{
         if  s2.len() == 0 && s1.len() == 0{
             return true;
@@ -29,38 +29,26 @@ pub fn interleave(s3: &[char], s1: &mut Vec<char>, s2: &mut Vec<char>, memo: &mu
     
     let mut res = false;
     
-    if let Some(&a) = s1.last(){
-        if let Some(&b) = s2.last(){
+    if let Some(&a) = s1.first(){
+        if let Some(&b) = s2.first(){
             if a == b && b == target{
-                s2.pop();
-                res |=interleave(&s3[1..], s1, s2, memo);
-                s2.push(b);
+                res |=interleave(&s3[1..], &s1[1..], s2, memo);
                 
-                s1.pop();
-                res |=interleave(&s3[1..], s1, s2, memo);
-                s1.push(a);
+                res |=interleave(&s3[1..], s1, &s2[1..], memo);
                 
             }else if a == target{
-                s1.pop();
-                res |=interleave(&s3[1..], s1, s2, memo);
-                s1.push(a);
+                res |=interleave(&s3[1..], &s1[1..], s2, memo);
             }else if b == target{
-                s2.pop();
-                res |=interleave(&s3[1..], s1, s2, memo);
-                s2.push(b);
+                res |=interleave(&s3[1..], s1, &s2[1..], memo);
             }
         }else{
             if a == target{
-                s1.pop();
-                res |=interleave(&s3[1..], s1, s2, memo);
-                s1.push(a);
+                res |=interleave(&s3[1..], &s1[1..], s2, memo);
             }
         }
-    }else if let Some(&b) = s2.last(){
+    }else if let Some(&b) = s2.first(){
         if b == target{
-            s2.pop();
-            res |=interleave(&s3[1..], s1, s2, memo);
-            s2.push(b);
+            res |=interleave(&s3[1..], s1, &s2[1..], memo);
         }
     }
     
