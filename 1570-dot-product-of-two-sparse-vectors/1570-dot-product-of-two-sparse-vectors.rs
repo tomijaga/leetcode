@@ -9,7 +9,9 @@ impl SparseVector {
         let mut map = HashMap::new();
         
         for (i, n) in nums.into_iter().enumerate(){
-            map.entry(i).or_insert(n);
+            if n != 0{
+                map.entry(i).or_insert(n);
+            }
         }
         
         Self{ map }
@@ -29,10 +31,3 @@ impl SparseVector {
             .sum()
     }
 }
-
-/**
- * Your SparseVector object will be instantiated and called as such:
- * let v1 = SparseVector::new(nums1);
- * let v2 = SparseVector::new(nums2);
- * let ans = v1.dot_product(v2);
- */
