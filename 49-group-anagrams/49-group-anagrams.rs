@@ -5,7 +5,11 @@ impl Solution {
         let mut map: HashMap<[u16; 26], Vec<String>> = HashMap::new();
         
         for s in strs{
-            let key =  count_chars(&s);
+            let mut key = [0_u16; 26];
+    
+            for c in s.chars(){
+                key[(c as u8 - 'a' as u8) as usize] += 1;
+            }
             
             if let Some(vals) = map.get_mut(&key){
                 vals.push(s);
@@ -16,14 +20,4 @@ impl Solution {
         
         map.into_values().collect::<Vec<Vec<String>>>()
     }
-}
-
-pub fn count_chars(s: &str) -> [u16; 26]{
-    let mut arr = [0_u16; 26];
-    
-    for c in s.chars(){
-        arr[(c as u8 - 'a' as u8) as usize] += 1;
-    }
-    
-    arr
 }
