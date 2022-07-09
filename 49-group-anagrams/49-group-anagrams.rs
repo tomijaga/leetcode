@@ -8,7 +8,7 @@ impl Solution {
             let mut key = [0_u16; 26];
     
             for c in s.chars(){
-                key[(c as u8 - 'a' as u8) as usize] += 1;
+                key[c as usize - 'a' as usize] += 1;
             }
             
             if let Some(vals) = map.get_mut(&key){
