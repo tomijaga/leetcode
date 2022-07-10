@@ -8,8 +8,8 @@ impl Solution {
 
         let mut right = 1;
 
-        for i in (0..nums.len()).rev(){
-            res[i] = res[i] * right;
+        for (i, n) in res.iter_mut().enumerate().rev(){
+            *n = *n * right;
             right *= nums[i];
         }
         
