@@ -4,7 +4,6 @@
         its tail call optimised so it  only uses 
         one stack frame
 """
-
 class Solution:
     def inorderSuccessor(self, node: 'Node') -> 'Optional[Node]':
         if node is None:
@@ -20,9 +19,7 @@ class Solution:
         
         
 def trav(node: 'Node', val: int,  successor: List['None']): 
-    if node.val > val:
-        if node.val < successor[0].val:
-            successor[0] = node
+    
             
     if node.parent is not None:
         trav(node.parent, val, successor)
@@ -34,6 +31,8 @@ def trav(node: 'Node', val: int,  successor: List['None']):
         if node.right is not None:
             node.right.parent = None
             trav(node.right, val, successor)
-    
+    if node.val > val:
+        if node.val < successor[0].val:
+            successor[0] = node
     
         
