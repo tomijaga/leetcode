@@ -17,7 +17,6 @@ impl Solution {
             cache[i] += cache[heap.peek().unwrap().1];
             heap.push((cache[i], i));
             
-            // println!("{:?}", cache);
         }
         
         *cache.last().unwrap()
