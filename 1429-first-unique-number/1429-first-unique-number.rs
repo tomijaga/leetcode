@@ -1,3 +1,22 @@
+// extra space : O(2*k) -> O(k)
+// where k is the number of unique numbers 
+
+// methods time complexity:
+//   new() : O(n log k)
+//   add() : O(log k)
+//   show_first_unique() : O(k), Θ(1)
+//      The highest runtime of this algorithms is O(k) because
+//      the heap can remove up to k elements if none of them are unique.
+//      When this function is called after this process of eliminating 
+//      duplicates, the algorithm will run in O(1) time 
+//
+//      This is similar to the push function for a dynamic array
+//      If called when the internal array is full it will have to 
+//      create an new array of size 2n and copy all the values from
+//      old array to the new one. O(n)
+//      Normally the run time is O(1)
+
+
 use std::collections::{HashMap, BinaryHeap};
 
 struct FirstUnique {
@@ -6,27 +25,21 @@ struct FirstUnique {
     next: i32
 }
 
-
-/** 
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl FirstUnique {
 
     fn new(nums: Vec<i32>) -> Self {
         let mut map = HashMap::new();
         let mut heap = BinaryHeap::new();
         let mut next = 0;
+        
         for (i, n) in nums.into_iter().enumerate(){
             let i = i as i32;
             if !map.contains_key(&n){
-                heap.push((-i, n));
+                heap.push((-next, n));
+                next +=1;
             }
             *map.entry(n).or_default() +=1;
-            next +=1;
         }
-        
-        // println!("{:?}", (&map, &heap, &next));
         
         Self{ map, heap, next }
     }
@@ -50,7 +63,6 @@ impl FirstUnique {
             }else{
                 break;
             }
-            
         }
         
         peekedItem.1
