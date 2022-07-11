@@ -1,11 +1,8 @@
 """
-# Definition for a Node.
-class Node:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-        self.parent = None
+     time complexity : O(height + n) -> O(n)
+    space complexity : O(1)
+        its tail call optimised so it  only uses 
+        one stack frame
 """
 
 class Solution:
@@ -16,8 +13,6 @@ class Solution:
         successor = [Node(sys.maxsize)]
         trav(node, node.val, successor)
         
-        # print(successor)
-        
         if successor[0].val == sys.maxsize:
             return None
         else:
@@ -25,7 +20,10 @@ class Solution:
         
         
 def trav(node: 'Node', val: int,  successor: List['None']): 
-
+    if node.val > val:
+        if node.val < successor[0].val:
+            successor[0] = node
+            
     if node.parent is not None:
         trav(node.parent, val, successor)
     else:
@@ -37,9 +35,5 @@ def trav(node: 'Node', val: int,  successor: List['None']):
             node.right.parent = None
             trav(node.right, val, successor)
     
-    # print(node.val)
-    if node.val > val:
-        if node.val < successor[0].val:
-            successor[0] = node
-        
+    
         
