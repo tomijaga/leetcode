@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet};
+use std::collections::{ BTreeSet };
 
 #[derive(Default)]
 struct SmallestInfiniteSet {
@@ -21,7 +21,7 @@ impl SmallestInfiniteSet {
             self.n+=1;
             tmp
         }else{
-            let &min = self.set.range(..).next().unwrap();
+            let &min = self.set.iter().next().unwrap();
             
             if min < self.n{
                 self.set.remove(&min);
