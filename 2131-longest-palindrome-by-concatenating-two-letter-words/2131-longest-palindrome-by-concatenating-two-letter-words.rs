@@ -7,16 +7,13 @@ impl Solution {
         let mut dup_chars_unpaired = 0;        
         let mut cnt = 0;
         
-        let words_iter = words.into_iter()
-            .map(|w| {
-                w.chars()
-                    .map(|c| id(c))
-                    .collect::<Vec<usize>>()
-        });
-        
-        for word in words_iter{
-            let ptr = &mut map[word[0]][word[1]];
-            if word[0] == word[1]{
+        for word in words{
+            let mut chars = word.chars();
+            let a = id(chars.next().unwrap());
+            let b = id(chars.next().unwrap());
+            
+            let ptr = &mut map[a][b];
+            if a == b{
                 if *ptr > 0{
                     *ptr -=1;
                     cnt+=4;
@@ -31,7 +28,7 @@ impl Solution {
                 *ptr -=1;
                 cnt+=4;
             }else{
-                map[word[1]][word[0]] += 1;
+                map[b][a] += 1;
             }
         }
         
