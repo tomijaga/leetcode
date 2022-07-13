@@ -1,10 +1,10 @@
-
-use std::collections::{ HashMap };
+use std::collections::{HashMap, HashSet};
 
 impl Solution {
     pub fn longest_palindrome(words: Vec<String>) -> i32 {
         let mut map = HashMap::new();
-        let mut dup_chars_unpaired = 0;        
+        let mut set = HashSet::new();
+        
         let mut cnt = 0;
         
         for word in words{
@@ -12,13 +12,11 @@ impl Solution {
             let flipped = vec![word[1], word[0]];
             
             if word == flipped{
-                if map.contains_key(&word){
-                    map.remove(&word);
+                if set.contains(&word){
+                    set.remove(&word);
                     cnt+=2;
-                    dup_chars_unpaired-=1;
                 }else{
-                    map.insert(word.clone(), 1);
-                    dup_chars_unpaired +=1;
+                    set.insert(word.clone());
                 }
                 
                 continue;
@@ -42,6 +40,6 @@ impl Solution {
             }
         }
         
-        (cnt * 2 ) + if dup_chars_unpaired > 0 {2} else {0}
+        (cnt * 2 ) + if set.len() > 0 {2} else {0}
     }
 }
