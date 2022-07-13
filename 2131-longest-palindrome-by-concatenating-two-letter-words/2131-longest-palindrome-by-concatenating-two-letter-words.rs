@@ -1,10 +1,10 @@
-
-use std::collections::{ HashMap };
+use std::collections::BTreeMap;
 
 impl Solution {
     pub fn longest_palindrome(words: Vec<String>) -> i32 {
-        let mut map = vec![vec![0; 26]; 26];
-        let mut dup_chars_unpaired = 0;        
+        let mut map = BTreeMap::new();
+        
+        let mut unpaired_dup_chars = 0;        
         let mut cnt = 0;
         
         for word in words{
@@ -12,27 +12,27 @@ impl Solution {
             let a = id(chars.next().unwrap());
             let b = id(chars.next().unwrap());
             
-            let ptr = &mut map[a][b];
-            if a == b{
-                if *ptr > 0{
-                    *ptr -=1;
+            let mut passed = false;
+            if let Some(n) = map.get_mut(&(a, b)){
+                if *n > 0{
+                    *n-=1;
                     cnt+=4;
-                    dup_chars_unpaired-=1;
-                }else{
-                    *ptr +=1;
-                    dup_chars_unpaired +=1;
+                    if a == b{
+                        unpaired_dup_chars-=1;
+                    }
+                    passed = true
                 }
-                continue;
             }
-            if *ptr > 0{
-                *ptr -=1;
-                cnt+=4;
-            }else{
-                map[b][a] += 1;
+            
+            if !passed{
+                if a == b{
+                    unpaired_dup_chars +=1;
+                }
+                *map.entry((b, a)).or_insert(0) +=1;
             }
         }
         
-        cnt + if dup_chars_unpaired > 0 {2} else {0}
+        cnt + if unpaired_dup_chars > 0 {2} else {0}
     }
 }
 
