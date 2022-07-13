@@ -1,80 +1,58 @@
-
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-// 
-
-use std::rc::Rc;
-use std::cell::RefCell;
-
-impl TreeNode {
-  #[inline]
-  pub fn inorder_traversal(&self) -> Vec<i32> {
-      
-      fn trav (node: &TreeNode, stack: &mut Vec<i32>){
-          if let Some(ref left) = node.left{
-               trav(&left.borrow(), stack);
-          }
-          
-          stack.push( node.val);
-          
-          if let Some(ref right) = node.right{
-               trav(&right.borrow(), stack);
-          }
-      }
-      
-      let mut stack = vec![];
-     
-      trav(self, &mut stack);
-      stack.reverse();
-      stack
-  }
-}
-
-struct BSTIterator {
-    stack: Vec<i32>,
-}
-
-
-/** 
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
  */
-impl BSTIterator {
-
-    fn new(root: Option<Rc<RefCell<TreeNode>>>) -> Self {
-        let mut stack = vec![];
-        if let Some(node) = root{
-            let in_order_stack = node.borrow().inorder_traversal();
-            stack = in_order_stack;
-        }
-        
-        // println!("{:?}", stack);
-        BSTIterator{
-            stack: stack,
-        }
+class BSTIterator {
+    Stack<TreeNode> stack;
+    
+    public BSTIterator(TreeNode root) {
+        stack = new Stack<TreeNode>();
+        putAll(root);
     }
     
-    fn next(&mut self) -> i32 {
+    public void putAll(TreeNode root){
+        TreeNode node = root;
         
-        if let Some(val) = self.stack.pop(){
-            return val;
+        while(node != null){
+            // System.out.println(node.val);
+            stack.push(node);
+            node = node.left;
         }
-        unreachable!();
+    }       
+    
+    public int next() {
+        if (stack.size() > 0){
+            TreeNode node = stack.pop();
+            
+            if (node.right != null){
+                putAll(node.right);
+            }
+            
+            return node.val;
+        }
+        
+        return -1;
     }
     
-    fn has_next(&self) -> bool {
-        !self.stack.is_empty()
+    public boolean hasNext() {
+        return stack.size() > 0;
     }
 }
 
 /**
  * Your BSTIterator object will be instantiated and called as such:
- * let obj = BSTIterator::new(root);
- * let ret_1: i32 = obj.next();
- * let ret_2: bool = obj.has_next();
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
  */
