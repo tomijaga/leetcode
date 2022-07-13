@@ -1,6 +1,6 @@
 impl Solution {
     pub fn simplify_path(path: String) -> String {
-        let mut stack = vec![];
+        let mut stack = vec![""];
         
         for p in path.split("/"){
             if p == ""{
@@ -8,7 +8,7 @@ impl Solution {
             }
             
             if p == ".."{
-                if stack.len() > 0{
+                if stack.len() > 1{
                     stack.pop();
                 }
             }else if p != "."{
@@ -16,8 +16,10 @@ impl Solution {
             }
         }
         
-        let mut cwd = String::from("/");
-        cwd.push_str(&stack.join("/"));
-        cwd
+        if stack.len() == 1{
+            String::from("/")
+        }else{
+            stack.join("/")
+        }
     }
 }
