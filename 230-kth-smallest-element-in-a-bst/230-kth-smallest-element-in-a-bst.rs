@@ -11,28 +11,28 @@ impl Solution {
 
 impl TreeNode{
     pub fn kth_smallest(&self, k: i32)-> i32{
-        let mut heap = BinaryHeap::new();
+        let mut v = vec![];
         
-        fn trav(node: &TreeNode, heap: &mut BinaryHeap<i32>, k: usize){
-            heap.push(node.val);
-            
-            if heap.len() > k {
-                heap.pop();
-            }
-            
+        fn trav(node: &TreeNode, v: &mut Vec<i32>, k: usize){
             if let Some(ref l) = node.left{
                 let l = l.borrow();
-                trav(&l, heap, k)
+                trav(&l, v, k)
+            }
+            
+            if v.len() < k {
+                v.push(node.val);
+            }else{
+                return;
             }
             
             if let Some(ref r) = node.right{
                 let r = r.borrow();
-                trav(&r, heap, k)
+                trav(&r, v, k)
             }
         }
         
-        trav(self, &mut heap, k as usize);
+        trav(self, &mut v, k as usize);
         
-        *heap.peek().unwrap()
+        v.pop().unwrap()
     }
 }
