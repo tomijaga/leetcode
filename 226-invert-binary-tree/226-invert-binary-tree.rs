@@ -1,34 +1,35 @@
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-// 
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
+
 use std::rc::Rc;
 use std::cell::RefCell;
 
+impl TreeNode{
+    pub fn invert (&self)-> Self{
+
+        let mut new_node = TreeNode::new(self.val);
+        
+        new_node.right = if let Some(ref left) = self.left{
+            let left = left.borrow();
+            Some(Rc::new(RefCell::new(left.invert())))
+        }else{
+            None
+        };
+        
+        new_node.left = if let Some(ref right) = self.right{
+            let right = right.borrow();
+            Some(Rc::new(RefCell::new(right.invert())))
+        }else{
+            None
+        };
+
+        new_node
+    }
+}
 impl Solution {
     pub fn invert_tree(mut root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
         if let Some(ref root) = root.clone(){
             let root = root.borrow();
-            
-            let mut new_node = TreeNode::new(root.val);
-            new_node.left = Self::invert_tree(root.right.clone());
-            new_node.right = Self::invert_tree(root.left.clone());
-            
-            Some(Rc::new(RefCell::new(new_node)))
+
+            Some(Rc::new(RefCell::new(root.invert())))
         }else{
             None
         }
