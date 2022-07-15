@@ -1,46 +1,41 @@
 impl Solution {
     pub fn shortest_distance_color(colors: Vec<i32>, queries: Vec<Vec<i32>>) -> Vec<i32> {
-        let mut shortest:Vec<Vec<usize>> = vec![];
+        let mut shortest:Vec<Vec<usize>> = Vec::with_capacity(colors.len());
         
         let mut prev = vec![usize::MAX, usize::MAX, usize::MAX];
-        let len = colors.len();
         
         for (i, &c) in colors.iter().enumerate(){
             let c = c as usize - 1; 
             prev[c]  = i;
             
-            let curr = prev.iter().map(|&index| {
-                if index == usize::MAX{
-                    index
+            let diff = prev.iter().map(|&prev_index| {
+                if prev_index == usize::MAX{
+                    prev_index
                 }else{
-                    i - index
+                    i - prev_index
                 }
             }).collect();
             
-            shortest.push(curr);
+            shortest.push(diff);
         }
         
         prev = vec![usize::MAX, usize::MAX, usize::MAX];
         
-        let mut len = colors.len();
-        // println!("s: {:?}", &shortest);
         for (i, c) in colors.into_iter().enumerate().rev(){
             let c = c as usize - 1; 
             
             prev[c]  = i;
             
-            shortest[i] = prev.iter().enumerate().map(|(c, &index)| {
-                (if index == usize::MAX{
-                    index
+            shortest[i] = prev.iter().enumerate().map(|(c, &prev_index)| {
+                (if prev_index == usize::MAX{
+                    prev_index
                 }else{
-                    index - i
+                    prev_index - i
                 })
                 .min(shortest[i][c])
             }).collect();
             
         }
-        
-        // println!("s: {:?}", &shortest);
         
         let mut res = vec![];
         
