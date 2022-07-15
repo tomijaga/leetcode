@@ -7,12 +7,8 @@ class Solution:
                     grid[i][j] = 0
                     sum = 1
                     for (dx, dy) in [(1 ,0), (0, 1), (-1, 0), (0, -1)]:
-                        x = i + dx
-                        y = j + dy
-                        sum+=dfs(x, y)
+                        sum+=dfs(i + dx, j + dy)
 
-            if sum >=1:
-                print(i, j)
             return sum
                     
         m, n = len(grid), len(grid[0])
@@ -21,6 +17,5 @@ class Solution:
             for j in range(0, n):
                 if grid[i][j] == 1:
                     cnt = max(dfs(i, j), cnt)
-                    print("---------")
                     
         return cnt
