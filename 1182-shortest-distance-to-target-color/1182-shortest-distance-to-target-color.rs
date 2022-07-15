@@ -37,7 +37,7 @@ impl Solution {
             
         }
         
-        let mut res = vec![];
+        let mut res = Vec::with_capacity(queries.len());
         
         for query in queries{
             let i = query[0] as usize;
