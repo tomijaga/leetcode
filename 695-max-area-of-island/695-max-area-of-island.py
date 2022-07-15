@@ -9,8 +9,6 @@ class Solution:
                     for (dx, dy) in [(1 ,0), (0, 1), (-1, 0), (0, -1)]:
                         x = i + dx
                         y = j + dy
-                        # if (x, y) == (3, 10) and (i, j) == (4,10):
-                        #     print("FOUND")
                         sum+=dfs(x, y)
 
             if sum >=1:
