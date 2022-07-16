@@ -1,22 +1,19 @@
- impl Solution {
-     
-     
+impl Solution {
     pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
+        let (mut i , mut j) = (0, numbers.len() - 1);
         
-        
-        let mut left = 0;
-        let mut right = numbers.len()-1;
-        while(numbers[left] + numbers[right] != target ){
-            let l = numbers[left];
-            let r = numbers[right];
+        while i < j{
+            let sum = numbers[i] + numbers[j];
             
-            if (l + r < target){
-                left+=1;
-            }else if (l + r > target){
-                right-=1;
+            if sum > target{
+                j-=1;
+            }else if sum < target{
+                i+=1;
+            }else{
+                return vec![(i + 1) as i32, (j + 1) as i32];
             }
         }
         
-        return vec![(left +1) as i32, (right + 1)  as i32];
+        unreachable!()
     }
 }
