@@ -1,58 +1,57 @@
-#[derive(Debug, Clone, Default)]
-struct Trie{
+#[derive(Default)]
+struct Trie {
     is_end: bool,
-    children: [Option<Box<Trie>>; 26]
+    children: [Option<Box<Trie>>; 26],
 }
+
 
 impl Trie {
 
     fn new() -> Self {
-        Default::default()
+        Self{ ..Default::default() }
     }
     
     fn insert(&mut self, word: String) {
-        let mut curr = self;
+        let mut trie = self;
         
-        for c in word.chars().map(|c|{ id(c) }){
-            let mut t = Trie::new();
-            
-            curr = curr.children[c].get_or_insert(Box::new(t)).as_mut();
+        for c in word.chars(){
+            trie = trie.children[char_index(c)]
+                .get_or_insert(Box::new(Trie::new()))
+                .as_mut();
         }
         
-        curr.is_end = true;
+        trie.is_end = true;
     }
     
-    fn search(&self, word: String) -> bool {
-        let mut curr = self;
+    fn search(& self, word: String) -> bool {
+        let mut trie = self;
         
-        for c in word.chars().map(|c|{ id(c) }){
-            
-            if let Some(ref node) = curr.children[c]{
-                curr = node.as_ref();
+        for c in word.chars(){
+            if let Some(ref next_trie) = trie.children[char_index(c)]{
+                trie = next_trie.as_ref();
             }else{
                 return false;
             }
         }
         
-        return curr.is_end;
+        trie.is_end
     }
     
     fn starts_with(&self, prefix: String) -> bool {
-        let mut curr = self;
+        let mut trie = self;
         
-        for c in prefix.chars().map(|c|{ id(c) }){
-            
-            if let Some(ref node) = curr.children[c]{
-                curr = node.as_ref();
+        for c in prefix.chars(){
+            if let Some(ref next_trie) = trie.children[char_index(c)]{
+                trie = next_trie.as_ref();
             }else{
                 return false;
             }
         }
         
-        return true;
+        true
     }
 }
 
-pub fn id(c: char) -> usize {
+pub fn char_index(c: char) -> usize{
     c as usize - 'a' as usize
 }
