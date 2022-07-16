@@ -4,7 +4,6 @@ struct Trie {
     children: [Option<Box<Trie>>; 26],
 }
 
-
 impl Trie {
 
     fn new() -> Self {
