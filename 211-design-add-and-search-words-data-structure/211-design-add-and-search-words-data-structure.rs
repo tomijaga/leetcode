@@ -21,8 +21,7 @@ impl WordDictionary {
         
         dict.is_word_end = true;
     }
-    
-    fn search(&self, word: String) -> bool {
+    fn search_ref(&self, word: &str) -> bool{
         let mut dict = self;
         
         for (i, c) in word.chars().enumerate(){
@@ -30,8 +29,8 @@ impl WordDictionary {
                 let res = dict.chars
                     .iter()
                     .any(|opt|{
-                        if let Some(ref d) = opt{
-                            d.search(word[i + 1..].to_string())
+                        if let Some(ref next_dict) = opt{
+                            next_dict.search_ref(&word[i + 1..])
                         }else{
                             false
                         }
@@ -48,6 +47,10 @@ impl WordDictionary {
         }
         
         dict.is_word_end
+    }
+    
+    fn search(&self, word: String) -> bool {
+        self.search_ref(&word)
     }
 }
 
