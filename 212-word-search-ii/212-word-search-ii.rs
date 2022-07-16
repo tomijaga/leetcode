@@ -6,42 +6,64 @@ struct Trie {
 
 impl Solution {
     pub fn find_words(mut board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {
-        let mut head = Trie::new();
+        let mut trie = Trie::new();
         let (m, n) = (board.len(), board[0].len());
+        
+        for word in words{
+            trie.insert(word);
+        }
+        
+        let mut word = vec![];
+        let mut res = vec![];
         
         for i in 0..m{
             for j in 0..n{
-                Self::dfs_insert(&mut board, &mut head, i, j, 0);
+                Self::dfs_search(&mut board, &mut trie, &mut res, &mut word,  i, j);
             }
         }
-        
-        let mut res = vec![];
-        
-        for word in words{
-            if head.search(&word){
-                res.push(word);
-            }
-        }
-        
         res
     }
     
-    pub fn dfs_insert(board: &mut Vec<Vec<char>>, mut trie: &mut Trie, i: usize, j: usize, len: u8){
+    pub fn dfs_search(
+        board: &mut Vec<Vec<char>>, 
+        mut trie: &mut Trie, 
+        res: &mut Vec<String>, 
+        word: &mut Vec<char>, 
+        i: usize, 
+        j: usize
+    ){
         let (m, n) = (board.len(), board[0].len());
         
-        if i != usize::MAX && j!= usize::MAX && i < m && j < n && board[i][j] != '#' && len < 10{
+        if  i!= usize::MAX && 
+            j!= usize::MAX && 
+            i < m && j < n && 
+            board[i][j] != '#'
+        {
             let c = board[i][j];
             board[i][j] = '#';
+
+            if let Some(ref mut curr_trie) = trie.children[char_index(c)]{
+                trie = curr_trie.as_mut();
             
-            trie = trie.children[char_index(c)]
-                .get_or_insert(Box::new(Trie::new()))
-                .as_mut();
-            
-            for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]{
-                Self::dfs_insert(board, trie, x, y, len+1);
+                word.push(c);
+                // println!("{:?}", (&word, c));
+                // println!("{:?}", &board);
+                
+                if trie.is_word_end{
+                    res.push(word.iter().collect::<String>());
+                    trie.is_word_end = false;
+                }
+                
+                for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]{
+                    Self::dfs_search(board, trie, res, word, x, y);
+                }
+                
+                word.pop();
+                
             }
             
             board[i][j] = c;
+            
         }
     }
 }
@@ -53,7 +75,7 @@ impl Trie {
         Default::default()
     }
     
-    fn insert(&mut self, word: &str) {
+    fn insert(&mut self, word: String) {
         let mut trie = self;
         
         for c in word.chars(){
@@ -76,7 +98,7 @@ impl Trie {
             }
         }
         
-        true
+        trie.is_word_end
     }
 }
 
