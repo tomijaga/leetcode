@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+
 #[derive(Default)]
 struct Trie {
     is_end: bool,
-    children: [Option<Box<Trie>>; 26],
+    children: HashMap<char, Box<Trie>>,
 }
 
 impl Trie {
@@ -14,8 +16,8 @@ impl Trie {
         let mut trie = self;
         
         for c in word.chars(){
-            trie = trie.children[char_index(c)]
-                .get_or_insert(Box::new(Trie::new()))
+            trie = trie.children.entry(c)
+                .or_insert(Box::new(Trie::new()))
                 .as_mut();
         }
         
@@ -26,7 +28,7 @@ impl Trie {
         let mut trie = self;
         
         for c in word.chars(){
-            if let Some(ref next_trie) = trie.children[char_index(c)]{
+            if let Some(next_trie) = trie.children.get(&c){
                 trie = next_trie.as_ref();
             }else{
                 return false;
@@ -40,7 +42,7 @@ impl Trie {
         let mut trie = self;
         
         for c in prefix.chars(){
-            if let Some(ref next_trie) = trie.children[char_index(c)]{
+            if let Some(next_trie) = trie.children.get(&c){
                 trie = next_trie.as_ref();
             }else{
                 return false;
