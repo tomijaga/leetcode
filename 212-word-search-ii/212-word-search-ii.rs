@@ -13,7 +13,7 @@ impl Solution {
             trie.insert(word);
         }
         
-        let mut word = vec![];
+        let mut word = String::new();
         let mut res = vec![];
         
         for i in 0..m{
@@ -28,7 +28,7 @@ impl Solution {
         board: &mut Vec<Vec<char>>, 
         mut trie: &mut Trie, 
         res: &mut Vec<String>, 
-        word: &mut Vec<char>, 
+        word: &mut String, 
         i: usize, 
         j: usize
     ){
@@ -41,6 +41,8 @@ impl Solution {
             board[i][j] != '#'
         {
             let c = board[i][j];
+            
+            // mark as visited
             board[i][j] = '#';
 
             if let Some(ref mut curr_trie) = trie.children[char_index(c)]{
@@ -49,7 +51,7 @@ impl Solution {
                 word.push(c);
                 
                 if trie.is_word_end{
-                    res.push(word.iter().collect::<String>());
+                    res.push(word.clone());
                     trie.is_word_end = false;
                 }
                 
