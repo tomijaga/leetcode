@@ -18,13 +18,13 @@ impl Solution {
         
         for i in 0..m{
             for j in 0..n{
-                Self::dfs_search(&mut board, &mut trie, &mut res, &mut word,  i, j);
+                Self::dfs(&mut board, &mut trie, &mut res, &mut word,  i, j);
             }
         }
         res
     }
     
-    pub fn dfs_search(
+    pub fn dfs(
         board: &mut Vec<Vec<char>>, 
         mut trie: &mut Trie, 
         res: &mut Vec<String>, 
@@ -36,7 +36,8 @@ impl Solution {
         
         if  i!= usize::MAX && 
             j!= usize::MAX && 
-            i < m && j < n && 
+            i < m && 
+            j < n && 
             board[i][j] != '#'
         {
             let c = board[i][j];
@@ -46,8 +47,6 @@ impl Solution {
                 trie = curr_trie.as_mut();
             
                 word.push(c);
-                // println!("{:?}", (&word, c));
-                // println!("{:?}", &board);
                 
                 if trie.is_word_end{
                     res.push(word.iter().collect::<String>());
@@ -55,7 +54,7 @@ impl Solution {
                 }
                 
                 for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]{
-                    Self::dfs_search(board, trie, res, word, x, y);
+                    Self::dfs(board, trie, res, word, x, y);
                 }
                 
                 word.pop();
@@ -67,7 +66,6 @@ impl Solution {
         }
     }
 }
-
 
 impl Trie {
 
@@ -85,20 +83,6 @@ impl Trie {
         }
         
         trie.is_word_end = true;
-    }
-    
-    fn search(&self, word: &str) -> bool {
-        let mut trie = self;
-        
-        for c in word.chars(){
-            if let Some(ref next_trie) = trie.children[char_index(c)]{
-                trie = next_trie.as_ref();
-            }else{
-                return false;
-            }
-        }
-        
-        trie.is_word_end
     }
 }
 
