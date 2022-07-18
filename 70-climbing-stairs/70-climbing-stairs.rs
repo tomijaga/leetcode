@@ -7,14 +7,14 @@ impl Solution {
             return 1;
         }
         
-        let (mut one, mut two) = (1, 2);
+        let (mut one, mut two) = (1, 1);
 
-        for i in 2..n{
-            let tmp = two;
-            two = two + one;
-            one = tmp;
+        for i in 1..n{
+            let tmp = one;
+            one = two + one;
+            two = tmp;
         }
         
-        two
+        one
     }
 }
