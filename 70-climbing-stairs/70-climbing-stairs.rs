@@ -1,6 +1,5 @@
 //  time complexity : O(n)
-// space complexity : O(n)
-
+// space complexity : O(1)
 
 impl Solution {
     pub fn climb_stairs(n: i32) -> i32 {
@@ -8,16 +7,14 @@ impl Solution {
             return 1;
         }
         
-        let n = n as usize;
-        let mut memo = vec![0; n];
-        
-        memo[0] = 1;
-        memo[1] = 2;
-        
+        let (mut one, mut two) = (1, 2);
+
         for i in 2..n{
-            memo[i] = memo[i-1] + memo[i - 2];
+            let tmp = two;
+            two = two + one;
+            one = tmp;
         }
         
-        memo[n - 1]
+        two
     }
 }
