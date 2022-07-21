@@ -2,7 +2,7 @@ use std::iter;
 
 impl Solution {
     pub fn add_strings(n1: String, n2: String) -> String {
-        let (n1, n2) = if n1.len() < n2.len(){
+        let (small, large) = if n1.len() < n2.len(){
              (n1, n2)
         }else{
             (n2, n1)
@@ -11,12 +11,14 @@ impl Solution {
         let mut carry = 0;
 
         let mut s:Vec<char> = vec![];
-        for (a, b) in n2.chars()
-                        .rev()
-                        .zip(n1.chars()
-                                .rev()
-                                .chain((0..).map(|_| '0')))
-        {
+        
+        let large_iter = large.chars().rev();
+        let small_iter = small.chars().rev();
+        let pad_with_zeroes = (0..).map(|_| '0');
+        
+        let zipped_iter = large_iter.zip(small_iter.chain(pad_with_zeroes));
+        
+        for (a, b) in zipped_iter {
             let sum = (a as u8 + b as u8) - ('0' as u8 * 2) + carry;
             
             if sum > 9{
