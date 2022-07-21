@@ -6,7 +6,7 @@ class Solution:
             
             for (i, n) in enumerate(nums):
                 arr.append(n)
-                res.append([x for x in arr])
+                res.append(arr.copy())
                 
                 ss(nums[i + 1:], arr)
                 arr.pop()
