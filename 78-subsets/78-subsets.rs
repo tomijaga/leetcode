@@ -3,7 +3,7 @@ impl Solution {
         
         pub fn sub(opts: &Vec<i32>, i: usize, res: &mut Vec<Vec<i32>>, nums: &mut Vec<i32>){
             if i == opts.len(){
-                res.push(nums.clone());
+                res.push(nums.to_vec());
                 return;
             }
             
