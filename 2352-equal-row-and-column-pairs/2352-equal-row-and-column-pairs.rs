@@ -12,14 +12,12 @@ impl Solution {
         
         let mut pairs = 0;
         
-        // println!("{:?}", &map);
-        
         for j in 0..n{
             let col = (0..m).map(|i|{ grid[i][j] }).collect::<Vec<i32>>();
             
-            if let Some(cnt) = map.get_mut(&col){
-                if *cnt > 0{
-                    pairs+=*cnt;
+            if let Some(&cnt) = map.get(&col){
+                if cnt > 0{
+                    pairs+=cnt;
                 }
             }
         }
