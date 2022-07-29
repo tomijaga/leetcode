@@ -2,70 +2,41 @@ use std::collections::HashMap;
 
 impl Solution {
     pub fn find_and_replace_pattern(words: Vec<String>, pattern: String) -> Vec<String> {
-        let mut map = HashMap::new();
-
-        let mut mapped_pattern:Vec<(i32, i32)> = vec![];
+        let mut map = vec!['0'; 26];
+        let mut p_map = vec!['0'; 26];
         
         let mut res:Vec<String> = vec![];
-        
-        let mut cnt = 0;
-        for c in pattern.chars(){
-            if !map.contains_key(&c){
-                map.insert(c, cnt);
-                cnt+=1;
-            }
-            
-            let n = *map.get(&c).unwrap();
-                
-            if let Some(last) = mapped_pattern.last_mut() {
-                if last.0 == n{
-                    last.1 +=1;
-                }else{
-                    mapped_pattern.push((n, 1));
-                }
-            }else{
-                mapped_pattern.push((n, 1));
-            }
-        }
-        
-        
+
         for word in words{
-            map.clear();
-            let mut mapped_word:Vec<(i32, i32)> = Vec::with_capacity(mapped_pattern.len());
-            
-            cnt = 0;
-            let mut i = 0;
-            for c in word.chars(){
-                if !map.contains_key(&c){
-                    map.insert(c, cnt);
-                    cnt+=1;
+            let mut is_match = true;
+            for (w, p) in word.chars().zip(pattern.chars()){
+                if map[id(w)] == '0'{
+                    map[id(w)] = p;
                 }
                 
-                let n = *map.get(&c).unwrap();
-                
-                if let Some(last) = mapped_word.last_mut() {
-                    if last.0 == n{
-                        last.1 +=1;
-                    }else{
-                        mapped_word.push((n, 1));
-                    }
-                }else{
-                    mapped_word.push((n, 1));
+                if p_map[id(p)] == '0'{
+                    p_map[id(p)] = w;
                 }
                 
-                if mapped_word.len() > mapped_pattern.len(){
-                    break;
+                if map[id(w)] != p || p_map[id(p)] != w{
+                    is_match = false;
+                    continue;
                 }
             }
             
-            if mapped_word == mapped_pattern{
+            map = vec!['0'; 26];
+            p_map = vec!['0'; 26];
+            
+            if is_match{
                 res.push(word);
             }
-            
-            mapped_word.clear();
         }
         
         res
         
     }
+}
+
+pub fn id(c: char) -> usize{
+    c as usize - 'a' as usize
 }
