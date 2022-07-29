@@ -28,10 +28,10 @@ impl Solution {
             }
         }
         
-        let mut mapped_word:Vec<(i32, i32)> = Vec::with_capacity(mapped_pattern.len());
         
         for word in words{
             map.clear();
+            let mut mapped_word:Vec<(i32, i32)> = Vec::with_capacity(mapped_pattern.len());
             
             cnt = 0;
             let mut i = 0;
