@@ -41,11 +41,11 @@ pub fn dfs_mark_boundary(grid: &mut Vec<Vec<i32>>, i: usize, j: usize){
     grid[i][j] = 2;
     
     for (dx, dy) in DIR{
-        let x = (dx + i as i32) as usize;
-        let y = (dy + j as i32) as usize;
+        let i = (dx + i as i32) as usize;
+        let j = (dy + j as i32) as usize;
         
-        if x!=usize::MAX && y!=usize::MAX && x < m && y < n && grid[x][y] == 1{
-            dfs_mark_boundary(grid, x, y);
+        if i!=usize::MAX && j!=usize::MAX && i < m && j < n && grid[i][j] == 1{
+            dfs_mark_boundary(grid, i, j);
         }
     }
 }
