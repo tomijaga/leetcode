@@ -21,7 +21,6 @@ pub fn dfs(grid: &mut Vec<Vec<i32>>, i: usize, j: usize) -> i32 {
     let (m, n) = (grid.len(), grid[0].len());
     
     if i == 0 || j == 0 || i == m - 1 || j == n-1{
-        grid[i][j] = 0;
         return 0;
     }
     
