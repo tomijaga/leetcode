@@ -4,11 +4,24 @@ impl Solution {
     pub fn num_enclaves(mut grid: Vec<Vec<i32>>) -> i32 {
         let (m, n) = (grid.len(), grid[0].len());
         
+        for i in 0..m{
+            for j in [0, n - 1]{
+                dfs_mark_boundary(&mut grid, i, j);
+            }
+        }
+        
+        for j in 0..n{
+            for i in [0, m - 1]{
+                dfs_mark_boundary(&mut grid, i, j);
+            }
+        }
+        
         let mut cnt = 0;
+        
         for i in 1..m-1{
             for j in 1..n-1{
                 if grid[i][j] == 1{
-                    cnt += dfs(&mut grid, i, j);
+                    cnt += 1;
                 }
             }
         }
@@ -17,39 +30,22 @@ impl Solution {
     }
 }
 
-pub fn dfs(grid: &mut Vec<Vec<i32>>, i: usize, j: usize) -> i32 {
+pub fn dfs_mark_boundary(grid: &mut Vec<Vec<i32>>, i: usize, j: usize){
     let (m, n) = (grid.len(), grid[0].len());
     
-    if i == 0 || j == 0 || i == m - 1 || j == n-1{
-        return 0;
+    if grid[i][j] == 0{
+        return;
     }
     
-    let mut cnt = if grid[i][j] == 1{
-        1
-    }else{
-        0
-    };
-    
-    let mut foundBoundaryNode = false;
+    // mark as visited
     grid[i][j] = 2;
     
     for (dx, dy) in DIR{
         let x = (dx + i as i32) as usize;
         let y = (dy + j as i32) as usize;
         
-        if grid[x][y] == 1{
-            let res = dfs(grid, x, y);
-            if res == 0{
-                foundBoundaryNode = true;
-            }
-            
-            cnt += res;
+        if x!=usize::MAX && y!=usize::MAX && x < m && y < n && grid[x][y] == 1{
+            dfs_mark_boundary(grid, x, y);
         }
-    }
-    
-    if foundBoundaryNode{
-        0
-    }else{
-        cnt
     }
 }
