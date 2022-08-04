@@ -11,17 +11,13 @@ impl Solution {
                 let x = i - 1;
                 let y = j - 1;
                 
-                let mut paths = grid[i][j];
-                
                 if x != usize::MAX && x < m {
-                    paths += grid[x][j];  
+                    grid[i][j] += grid[x][j];  
                 };
                 
                 if y != usize::MAX && y < n {
-                    paths += grid[i][y];  
+                    grid[i][j] += grid[i][y];  
                 };
-                
-                grid[i][j] = paths;
             }
         }
         
