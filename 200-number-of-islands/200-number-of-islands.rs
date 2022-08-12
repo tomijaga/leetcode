@@ -1,37 +1,52 @@
 impl Solution {
     pub fn num_islands(mut grid: Vec<Vec<char>>) -> i32 {
-        let (row, col) = (grid.len(), grid[0].len());
+        let (m, n) = (grid.len(), grid[0].len());
         
-        let mut n = 0;
+        let mut stack = vec![];
         
-        for i in 0..row{
-            for j in 0..col{
+        let (mut si, mut sj) = (0, 0);
+        let mut islands = 0;
+        
+        while let Some((i, j))  = get_next_island(&grid, si, sj) {
+            si = i;
+            sj = j;
+            islands+=1;
+            stack.push((i, j));
+
+            while !stack.is_empty(){
+                let (i, j) = stack.pop().unwrap();
+                
                 if grid[i][j] == '1'{
-                    if dfs(&mut grid, i, j) {
-                        n+=1;
+                    grid[i][j] = '0';
+                    
+                    for (x, y) in [(i + 1, j), (i - 1, j), (i, j+ 1),(i, j-1)]{
+                        if x!=usize::MAX && x < m && y!=usize::MAX && y < n && grid[x][y] == '1'{
+                            stack.push((x, y));
+                        }
                     }
                 }
-                
             }
         }
         
-        n
+        islands
+        
     }
 }
 
-pub fn dfs(grid: &mut Vec<Vec<char>>, i: usize, j: usize) -> bool {
-    let (row, col) = (grid.len(), grid[0].len());
+fn get_next_island(grid: &Vec<Vec<char>>, startI: usize, startJ: usize) -> Option<(usize, usize)>{
+    let (m, n) = (grid.len(), grid[0].len());
     
-    if ( i < 0 || j < 0 || i>= row || j >= col || grid[i][j] != '1') {
-        return false;
+    if startI == 0 && startJ == 0 && grid[startI][startJ] == '1'{
+        return Some((0, 0));
     }
-
-    grid[i][j] = '#';
     
-    dfs(grid, i+1, j);
-    dfs(grid, i-1, j);
-    dfs(grid, i, j-1);
-    dfs(grid, i, j+1);
+    for i in startI..m{
+        for j in 0..n{
+            if (i == startI && j > startJ || i > startI) && grid[i][j] == '1'{
+                return Some((i, j));
+            }
+        }
+    }
     
-    return true;
+    None
 }
