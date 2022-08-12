@@ -1,53 +1,32 @@
-use std::collections::HashSet;
-use std::collections::VecDeque;
-
-type Point = (usize, usize);
-
 impl Solution {
-    pub fn max_area_of_island(grid: Vec<Vec<i32>>) -> i32 {
-        let mut visited = HashSet::new();
+    pub fn max_area_of_island(mut grid: Vec<Vec<i32>>) -> i32 {
+        let (m, n) = (grid.len(), grid[0].len());
+        let mut area = 0;
         
-        let (r, c) = (grid.len(), grid[0].len());
-        
-        let mut max = 0;
-        
-        for i in 0..r{
-            for j in 0..c{
-                let mut queue: VecDeque<Point> = VecDeque::from([(i, j)]);
-                let mut result = 0;
-                
-                while let Some(p) = queue.pop_front(){
-                    if bfs(&grid, &mut visited, &mut queue, p){
-                        result+=1;
-                    }
-                }
-                
-                if result > max{
-                    max = result;
+        for i in 0..m{
+            for j in 0..n{
+                if grid[i][j] == 1{
+                    grid[i][j] = 0;
+                    area = area.max(dfs(&mut grid, i, j));
                 }
             }
         }
         
-        max
-        
+        area
     }
 }
 
-pub fn bfs(grid: &Vec<Vec<i32>>, visited: &mut HashSet<Point>, queue: &mut VecDeque<Point>, p: Point)-> bool {
-    let (i, j) = p;
-    let (r, c) = (grid.len(), grid[0].len());
+fn dfs(grid: &mut Vec<Vec<i32>>, i: usize, j: usize) -> i32{
+    let (m, n) = (grid.len(), grid[0].len());
     
-    
-    if (!(0..r).contains(&i) || !(0..c).contains(&j) || visited.contains(&(p)) || grid[i][j] == 0){
-        return false;
+    let mut sum = 1;
+
+    for (i, j) in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]{
+        if i != usize::MAX && j != usize::MAX && i < m && j < n && grid[i][j] == 1{
+            grid[i][j] = 0;
+            sum += dfs(grid, i, j);
+        }
     }
     
-    visited.insert(p);
-    
-    queue.push_back((i + 1, j));
-    queue.push_back((i - 1, j));
-    queue.push_back((i, j + 1));
-    queue.push_back((i, j - 1));
-    
-    true
+    sum
 }
