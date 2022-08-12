@@ -3,7 +3,6 @@ use std::collections::VecDeque;
 impl Solution {
     pub fn num_islands(mut grid: Vec<Vec<char>>) -> i32 {
         let (m, n) = (grid.len(), grid[0].len());
-        let mut q = VecDeque::new();
         
         let (mut si, mut sj) = (0, 0);
         let mut islands = 0;
@@ -12,8 +11,7 @@ impl Solution {
             for j in 0..n{
                 if grid[i][j] == '1'{
                     grid[i][j] = '0';
-                    q.push_back((i, j));
-                    bfs(&mut grid, &mut q);
+                    bfs(&mut grid, i, j);
                     islands +=1;
                 }
             }
@@ -24,8 +22,9 @@ impl Solution {
     }
 }
 
-fn bfs(grid: &mut Vec<Vec<char>>, q: &mut VecDeque<(usize, usize)>){
+fn bfs(grid: &mut Vec<Vec<char>>, i: usize, j: usize){
     let (m, n) = (grid.len(), grid[0].len());
+    let mut q = VecDeque::from([(i, j)]);
     
     while !q.is_empty(){
         let (i, j) = q.pop_front().unwrap();
