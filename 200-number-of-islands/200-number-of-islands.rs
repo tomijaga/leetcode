@@ -31,7 +31,7 @@ fn bfs(grid: &mut Vec<Vec<char>>, q: &mut VecDeque<(usize, usize)>){
         let (i, j) = q.pop_front().unwrap();
         
         for (i, j) in [(i + 1, j), (i - 1, j), (i, j+ 1),(i, j-1)]{
-            if (0..m).contains(&i) && (0..n).contains(&j) && grid[i][j] == '1'{
+            if i!=usize::MAX && i < m && j!=usize::MAX && j < n && grid[i][j] == '1'{
                 q.push_back((i, j));
                 grid[i][j] = '0';
             }
