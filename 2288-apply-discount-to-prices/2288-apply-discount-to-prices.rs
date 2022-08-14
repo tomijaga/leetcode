@@ -14,7 +14,6 @@ impl Solution {
             if word.len()> 0{
                 if word.as_bytes()[0] == b'$'{
                         if let Ok(num) = &word[1..].parse::<f64>(){
-                            println!("{:?}", (&word[1..], num));
                             let n = num  * ((100 - discount) as f64 / 100_f64);
                             
                             write!(&mut new_str, "${:.2}", n);
