@@ -1,3 +1,5 @@
+use std::fmt::Write as FmtWrite;
+
 impl Solution {
     pub fn discount_prices(sentence: String, discount: i32) -> String {
         let mut new_str = String::new();
@@ -14,8 +16,8 @@ impl Solution {
                         if let Ok(num) = &word[1..].parse::<f64>(){
                             println!("{:?}", (&word[1..], num));
                             let n = num  * ((100 - discount) as f64 / 100_f64);
-
-                            new_str.push_str(&format!("${:.2}", n));
+                            
+                            write!(&mut new_str, "${:.2}", n);
                             continue;
                         }
                 }
