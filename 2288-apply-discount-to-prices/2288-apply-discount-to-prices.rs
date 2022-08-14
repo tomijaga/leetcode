@@ -3,9 +3,6 @@ use std::fmt::Write as FmtWrite;
 impl Solution {
     pub fn discount_prices(sentence: String, discount: i32) -> String {
         let mut new_str = String::new();
-        if sentence == String::from("$1e9"){
-            return sentence;
-        }
         
         for (i, word) in sentence.split_whitespace().enumerate(){
             if i != 0{
@@ -13,12 +10,14 @@ impl Solution {
             } 
             if word.len()> 0{
                 if word.as_bytes()[0] == b'$'{
+                    if (&word[1..]).chars().all(|c|{c >= '0' && c<= '9'}){
                         if let Ok(num) = &word[1..].parse::<f64>(){
                             let n = num  * ((100 - discount) as f64 / 100_f64);
-                            
+
                             write!(&mut new_str, "${:.2}", n);
                             continue;
                         }
+                    }
                 }
             }
 
