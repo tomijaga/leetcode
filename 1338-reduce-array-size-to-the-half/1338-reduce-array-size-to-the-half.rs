@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap};
+use std::collections::{BTreeMap, BinaryHeap};
 
 impl Solution {
     pub fn min_set_size(arr: Vec<i32>) -> i32 {
@@ -9,26 +9,23 @@ impl Solution {
             *freq.entry(n).or_insert(0_i32) +=1;
         }
         
-        let mut flipped_freq = freq.into_iter()
-            .map(|(n, cnt)|{(cnt, n)})
-            .collect::<Vec<(i32, i32)>>();
-        
-        flipped_freq.sort_unstable_by(|a, b| b.cmp(&a));
-        
+        let mut heap = BinaryHeap::new();
         let mut sum = 0;
         
-        for (i, (cnt, n)) in flipped_freq.into_iter().enumerate(){
-            // println!(": {:?}", (cnt, n));
+        for cnt in freq.into_values(){
+            // println!(": {:?}", cnt);
+            // println!("h {:?}", &heap);
+            
             
             sum += cnt;
+            heap.push(-cnt);
             
-            if sum >= (len /2) as i32{
-                return (i + 1) as i32;
+            while (sum + *heap.peek().unwrap()) >= (len/2) as i32{
+                sum+=heap.pop().unwrap();
             }
+            
         }
         
-        // println!("s: {:?}", sum);
-        
-        -1
+        heap.len() as i32
     }
 }
