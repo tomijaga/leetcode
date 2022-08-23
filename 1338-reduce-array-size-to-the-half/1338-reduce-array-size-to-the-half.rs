@@ -2,20 +2,17 @@ use std::collections::{BTreeMap, BinaryHeap};
 
 impl Solution {
     pub fn min_set_size(arr: Vec<i32>) -> i32 {
-        let mut freq = BTreeMap::new();
+        let mut counter = vec![0; 100_000];
         let len = arr.len();
         
         for n in arr{
-            *freq.entry(n).or_insert(0_i32) +=1;
+            counter[(n as usize) -1] +=1;
         }
         
         let mut heap = BinaryHeap::new();
         let mut sum = 0;
         
-        for cnt in freq.into_values(){
-            // println!(": {:?}", cnt);
-            // println!("h {:?}", &heap);
-            
+        for cnt in counter{
             
             sum += cnt;
             heap.push(-cnt);
