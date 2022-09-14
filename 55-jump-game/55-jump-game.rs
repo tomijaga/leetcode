@@ -4,31 +4,24 @@ impl Solution {
         let last_ptr = dp.last_mut().unwrap();
         *last_ptr = Some(true);
         
-        backtrack(&nums, &mut dp, 0)
-    }
-}
-
-fn backtrack(nums: &Vec<i32>, dp: &mut Vec<Option<bool>>, i: usize) -> bool {
-    if i == nums.len() - 1{
-        return true;
-    }
-    
-    let upper_bound = (nums.len() - 1 - i).min(nums[i] as usize);
-    
-    for di in (1..=upper_bound){
-        let j = i + di;
-        
-        if let Some(val) = &dp[j]{
-            if *val{
-                return true;
+        for i in (0..nums.len() - 1).rev(){
+            let mut res = false;
+            
+            let upper_bound = (nums.len() - 1 - i).min(nums[i] as usize);
+            
+            for di in 1..=upper_bound{
+                let j = i + di;
+                
+                if &Some(true) == &dp[j]{
+                    res = true; 
+                    break;
+                }
             }
-        }else if backtrack(nums, dp, j){
-            dp[j] = Some(true); 
-            return true;
-        }else{
-            dp[j] = Some(false);
+            
+            dp[i] = Some(res);
+            
         }
+        
+        &Some(true) == &dp[0]
     }
-    
-    false
 }
