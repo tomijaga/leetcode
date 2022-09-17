@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 
 impl Solution {
     pub fn maximum_score(nums: Vec<i32>, multipliers: Vec<i32>) -> i32 {
-        let mut dp = vec![BTreeMap::new(); multipliers.len()];
+        let mut dp = vec![vec![None; multipliers.len()]; multipliers.len()];
         
         backtrack(&nums, &multipliers, &mut dp, 0, nums.len() - 1, 0)
     }
@@ -11,7 +11,7 @@ impl Solution {
 pub fn backtrack(
     nums: &[i32], 
     multipliers: &[i32], 
-    dp: &mut Vec<BTreeMap<(usize, usize), i32>>, 
+    dp: &mut Vec<Vec<Option<i32>>>, 
     i: usize, 
     j: usize,
     op: usize
@@ -20,8 +20,8 @@ pub fn backtrack(
         return 0;
     }
     
-    if let Some(&score) = dp[op].get(&(i, j)){
-        return score;
+    if let Some(score) = &dp[op][i]{
+        return *score;
     }
     
     let m = multipliers[op];
@@ -34,7 +34,7 @@ pub fn backtrack(
     
     let score = top.max(bottom);
     
-    dp[op].insert((i, j), score);
+    dp[op][i] = Some(score);
     
     score
     
