@@ -25,27 +25,18 @@ impl TicTacToe {
         
         set.insert((row, col));
         
-        let mut pos = vec![0;4];
+        let mut path = vec![0;4];
         
         for i in 0..self.size{
-            if set.contains(&(row, i)){
-                pos[0]+=1;
-            }
-            
-            if set.contains(&(i, col)){
-                pos[1]+=1;
-            }
-            
-            if set.contains(&(i, i)){
-                pos[2]+=1;
-            }
-            
-            if set.contains(&(i, self.size - i - 1)){
-                pos[3]+=1;
+            let positions = [(row, i), (i, col), (i, i), (i, self.size - i - 1)];
+            for (j, pos) in positions.into_iter().enumerate(){
+                if set.contains(&pos){
+                    path[j]+=1;
+                }
             }
         }
         
-        if pos.into_iter().any(|val| val == self.size){
+        if path.into_iter().any(|val| val == self.size){
             player
         }else{
             0
