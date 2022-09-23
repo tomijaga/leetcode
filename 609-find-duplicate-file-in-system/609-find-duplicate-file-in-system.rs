@@ -5,7 +5,7 @@ impl Solution {
     pub fn find_duplicate(paths: Vec<String>) -> Vec<Vec<String>> {
         let mut map = BTreeMap::new();
         
-        for path in paths{
+        for path in paths.iter(){
             
             let mut path_iter = path.split_whitespace();
             let dir = path_iter.next().unwrap();
@@ -15,7 +15,7 @@ impl Solution {
                 let mut file_iter = file.split("(");
                 let filename = file_iter.next().unwrap();
                 let tmp = file_iter.next().unwrap();
-                let content = String::from(&tmp[..tmp.len() - 1]);
+                let content = &tmp[..tmp.len() - 1];
                 
                 map.entry(content)
                     .or_insert(vec![])
