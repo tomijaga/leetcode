@@ -1,9 +1,9 @@
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::fmt::Write as FmtWrite;
 
 impl Solution {
     pub fn find_duplicate(paths: Vec<String>) -> Vec<Vec<String>> {
-        let mut map = BTreeMap::new();
+        let mut map = HashMap::new();
         
         for path in paths.iter(){
             
