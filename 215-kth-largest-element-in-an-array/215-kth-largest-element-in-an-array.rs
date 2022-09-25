@@ -3,20 +3,18 @@ use std::cmp::Reverse;
 
 impl Solution {
     pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
+        let k = k as usize;
         let mut heap = BinaryHeap::new();
         
         for n in nums{
             heap.push(Reverse(n));
-            if heap.len() > k as usize{
+            
+            if heap.len() > k{
                 heap.pop();
             }
         }
         
-        if let Some(Reverse(kth_largest)) = heap.pop(){
-            kth_largest
-        }else{
-            0
-        }
-        
+        let Reverse(n) = heap.pop().unwrap();
+        n
     }
 }
