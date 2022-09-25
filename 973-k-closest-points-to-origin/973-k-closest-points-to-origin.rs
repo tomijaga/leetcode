@@ -7,8 +7,8 @@ impl Solution {
         
         for point in points{
             let (x, y) = (point[0], point[1]);
-            let dx = (x - 0).pow(2);
-            let dy = (y - 0).pow(2);
+            let dx = (x - 0).abs().pow(2);
+            let dy = (y - 0).abs().pow(2);
             
             heap.push((dx + dy, vec![x, y]));
             
