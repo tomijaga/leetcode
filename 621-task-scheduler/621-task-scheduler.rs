@@ -1,23 +1,30 @@
-use std::collections::{BinaryHeap, VecDeque, HashMap};
+use std::collections::{BinaryHeap, VecDeque};
 
 impl Solution {
-    pub fn least_interval(tasks: Vec<char>, n: i32) -> i32 {
+    pub fn least_interval(mut tasks: Vec<char>, n: i32) -> i32 {
         let mut heap = BinaryHeap::new();
         let mut q = VecDeque::new();
-        let mut map = HashMap::new();
+        let mut map = vec![0; 26];
         
-        for c in tasks.into_iter(){
-            *map.entry(c).or_insert(0) += 1;
+        let mut cnt = 0;
+        let mut prev = tasks[0];
+        
+        tasks.sort_unstable();
+        
+        for t in tasks{
+            map[(t as u8 - 'A' as u8) as usize] +=1;
         }
         
-        for (c, cnt) in map{
-            heap.push((cnt, c));
+        for (i, cnt) in map.into_iter().enumerate(){
+            if cnt > 0{
+                let c = ('A' as u8 + i as u8) as char;
+                heap.push((cnt, c));
+            }
         }
-                
+        
         let mut time = 0;
         
         while !heap.is_empty() || !q.is_empty() {
-            // println!("{:?}", (&heap, &q));
             
             while let Some(item) = q.pop_front(){
                 let (process_time, cnt, c) = item;
@@ -34,8 +41,6 @@ impl Solution {
                 if cnt > 1{
                     q.push_back((time + n, cnt - 1, c));
                 }
-                
-                // println!("{}s {:?}", time, c);
             }
             
             time+=1;
