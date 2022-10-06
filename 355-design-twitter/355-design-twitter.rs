@@ -1,5 +1,4 @@
-use std::collections::{HashMap, HashSet, VecDeque, BinaryHeap};
-use std::cmp::Ordering;
+use std::collections::{HashMap, HashSet, VecDeque};
 
 type Tweet = (i32, i32);
 
