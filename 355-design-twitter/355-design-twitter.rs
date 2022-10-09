@@ -32,7 +32,7 @@ impl Twitter {
     
     fn get_news_feed(&self, user_id: i32) -> Vec<i32> {
         let mut feed = vec![];
-        let mut reference = vec![];
+        let mut reference : Vec<(usize, &VecDeque<Tweet>)> = vec![];
         
         if let Some(ppl_user_follows) = self.followers.get(&user_id){
             for followee_id in ppl_user_follows.into_iter().chain([user_id].into_iter()){
@@ -43,10 +43,15 @@ impl Twitter {
         }
         
         while feed.len() < 10{
-            if let Some((i, tuple)) = reference.iter_mut()
-                .enumerate()
-                .max_by(|(_, a), (_, b)| {
-                    a.1.get(a.0 - 1).cmp(&(b.1.get(b.0 - 1)))
+            if let Some(tuple) = reference.iter_mut()
+                .max_by(|a, b| {
+                    let (len_a, tweets_a) = a;
+                    let (len_b, tweets_b) = b;
+                    
+                    let tweet_a = tweets_a.get(len_a - 1);
+                    let tweet_b = tweets_b.get(len_b - 1);
+                    
+                    tweet_a.cmp(&tweet_b)
                 })
             {
                 if tuple.0 == 0{
