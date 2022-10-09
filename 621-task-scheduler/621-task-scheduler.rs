@@ -4,18 +4,16 @@ impl Solution {
     pub fn least_interval(mut tasks: Vec<char>, n: i32) -> i32 {
         let mut heap = BinaryHeap::new();
         let mut q = VecDeque::new();
-        let mut map = vec![0; 26];
+        let mut freq = vec![0; 26];
         
         let mut cnt = 0;
         let mut prev = tasks[0];
         
-        tasks.sort_unstable();
-        
         for t in tasks{
-            map[(t as u8 - 'A' as u8) as usize] +=1;
+            freq[(t as u8 - 'A' as u8) as usize] +=1;
         }
         
-        for (i, cnt) in map.into_iter().enumerate(){
+        for (i, cnt) in freq.into_iter().enumerate(){
             if cnt > 0{
                 let c = ('A' as u8 + i as u8) as char;
                 heap.push((cnt, c));
