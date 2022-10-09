@@ -1,70 +1,41 @@
 use std::collections::BinaryHeap;
 use std::cmp::Reverse;
 
+#[derive(Default)]
 struct MedianFinder {
-    big: BinaryHeap<Reverse<i32>>,
-    small: BinaryHeap<i32>
+    left: BinaryHeap<i32>,
+    right: BinaryHeap<Reverse<i32>>,
 }
 
-/** 
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl MedianFinder {
 
     fn new() -> Self {
-        Self{
-            big: BinaryHeap::new(),
-            small: BinaryHeap::new()
-        }
-    }
-    
-    fn len(&self)-> usize{
-        self.small.len() +  self.big.len()
+        Default::default()
     }
     
     fn add_num(&mut self, num: i32) {
-        self.small.push(num);
+        let mut left = &mut self.left;
+        let mut right = &mut self.right;
         
-        let n = self.small.pop().unwrap();
-        self.big.push(Reverse(n));
+        left.push(num);
+        right.push(Reverse(left.pop().unwrap()));
         
-        let s_len = self.small.len();
-        let mid = self.len()/2;
-        
-        if s_len <= mid{
-            if let Some(Reverse(n)) = self.big.pop(){
-                self.small.push(n);
-            }
+        if left.len() < right.len(){
+            let Reverse(n) = right.pop().unwrap();
+            left.push(n);
         }
     }
     
-    fn find_median(&mut self) -> f64 {
-        let len = self.len();
-        let mid = len/2;
+    fn find_median(&self) -> f64 {
+        let left = &self.left;
+        let right = &self.right;
         
-        let mut elems = vec![];
-        
-        // println!("s: {:?}\nb:{:?}\n", &self.small, &self.big);
-        
-        if len % 2 == 0{
-            elems.push(self.small.pop().unwrap());
-            elems.push(self.small.pop().unwrap());
+        if left.len() == right.len(){
+            let a = *left.peek().unwrap();
+            let Reverse(b) = *right.peek().unwrap();
+            (a + b) as f64 / 2_f64
         }else{
-            elems.push(self.small.pop().unwrap());
+            *left.peek().unwrap() as f64
         }
-        
-        for &n in elems.iter(){
-            self.small.push(n);
-        }
-        
-        elems.iter().sum::<i32>() as f64 / elems.len() as f64
     }
 }
-
-/**
- * Your MedianFinder object will be instantiated and called as such:
- * let obj = MedianFinder::new();
- * obj.add_num(num);
- * let ret_2: f64 = obj.find_median();
- */
