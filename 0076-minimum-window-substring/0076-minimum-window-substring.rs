@@ -10,12 +10,11 @@ impl Solution {
         let mut map_s: HashMap<char, i32> = HashMap::new();
         let mut map_t: HashMap<char, i32> = HashMap::new();
         
-        let s = s.chars().collect::<Vec<char>>();
-        let t = t.chars().collect::<Vec<char>>();
+        let s_bytes = s.as_bytes();
         let mut required = 0;
         let mut found = 0;
         
-        for &c in t.iter(){
+        for c in t.chars(){
             *map_t.entry(c).or_default() +=1;
             map_s.entry(c).or_default();
         }
@@ -29,7 +28,7 @@ impl Solution {
             
             while found < required{
                 if j < s.len(){
-                    let c = s[j];
+                    let c = s_bytes[j] as char;
 
                     if let Some(cnt) = map_s.get_mut(&c){
                         *cnt+= 1;
@@ -55,7 +54,7 @@ impl Solution {
             }
             
             
-            let c = s[i];
+            let c = s_bytes[i] as char;
             
             if let Some(cnt) = map_s.get_mut(&c){
                 if *cnt == map_t[&c]{
@@ -72,13 +71,12 @@ impl Solution {
     }
 }
 
-fn return_value(s: &Vec<char>, min_tup: (usize, usize)) -> String{
+fn return_value(s: &str, min_tup: (usize, usize)) -> String{
     let (len, start) = min_tup;
         
     if len == usize::MAX{
         String::new()
     }else{
-        (&s[start..(start + len)]).into_iter()
-        .collect::<String>()
+        (&s[start..(start + len)]).to_string()
     }
 }
