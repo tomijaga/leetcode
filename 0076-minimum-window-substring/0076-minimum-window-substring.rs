@@ -27,21 +27,23 @@ impl Solution {
         
         for i in 0..s.len(){
             
-            while found < required && j < s.len(){
-                let c = s[j];
-                
-                if let Some(cnt) = map_s.get_mut(&c){
-                    *cnt+= 1;
-                    
-                    if map_s[&c] == map_t[&c]{
-                        found += 1;
+            while found < required{
+                if j < s.len(){
+                    let c = s[j];
+
+                    if let Some(cnt) = map_s.get_mut(&c){
+                        *cnt+= 1;
+
+                        if map_s[&c] == map_t[&c]{
+                            found += 1;
+                        }
                     }
+
+                    j+=1;
+                }else{
+                    return return_value(&s, min_tup);
                 }
-                
-                j+=1;
             }
-            
-            // println!("{:?}", (i, j, found));
             
             if found == required{
                 let len = j - i;
@@ -66,13 +68,17 @@ impl Solution {
             }
         }
         
-        let (len, start) = min_tup;
+        return_value(&s, min_tup)
+    }
+}
+
+fn return_value(s: &Vec<char>, min_tup: (usize, usize)) -> String{
+    let (len, start) = min_tup;
         
-        if len == usize::MAX{
-            String::new()
-        }else{
-            (&s[start..(start + len)]).into_iter()
-            .collect::<String>()
-        }
+    if len == usize::MAX{
+        String::new()
+    }else{
+        (&s[start..(start + len)]).into_iter()
+        .collect::<String>()
     }
 }
