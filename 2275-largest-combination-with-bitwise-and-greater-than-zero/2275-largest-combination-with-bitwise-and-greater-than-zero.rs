@@ -4,10 +4,9 @@ impl Solution {
         let mut sum = 0;
         let mut max_len = 0;
         
-        for _ in 0..32{
-            for n in candidates.iter_mut(){
-                sum += 1 & *n;
-                *n = *n >> 1;
+        for pos in 0..32{
+            for &n in candidates.iter(){
+                sum += 1 & (n >> pos);
             }    
             
             max_len = max_len.max(sum);
