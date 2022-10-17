@@ -21,7 +21,7 @@ impl OrderedStream {
         
         if id_key == self.ptr{
             while let Some(val) = self.store.remove(&self.ptr){
-                res.push(val.clone());
+                res.push(val);
                 self.ptr+=1;
             }
         }
