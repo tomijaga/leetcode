@@ -1,6 +1,5 @@
 impl Solution {
     pub fn largest_combination(mut candidates: Vec<i32>) -> i32 {
-        let mut arr = vec![vec![0_i32;candidates.len()];32];
         let mut sum = 0;
         let mut max_len = 0;
         
