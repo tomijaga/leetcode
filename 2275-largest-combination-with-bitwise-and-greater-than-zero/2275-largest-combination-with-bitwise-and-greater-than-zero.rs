@@ -3,8 +3,8 @@ impl Solution {
         let mut arr = vec![vec![0_i32;candidates.len()];32];
         
         for (i, n) in candidates.into_iter().enumerate(){
-            for (j, b) in format!("{:#034b}", n).chars().skip(2).enumerate(){
-                arr[j][i] = if b == '0' {0} else{1};
+            for (j, pos) in (0..32).enumerate(){
+                arr[j][i] = 1 & (n >> pos);
             }
         }
         
