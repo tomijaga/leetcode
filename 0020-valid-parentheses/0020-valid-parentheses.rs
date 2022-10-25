@@ -12,13 +12,14 @@ impl Solution {
         for c in s.chars(){
             if (brackets.contains_key(&c)){
                 stack.push(c);
+                continue;
             }else if let Some(b) = stack.pop(){
-                if brackets[&b] != c{
-                    return false;
+                if brackets[&b] == c{
+                    continue;
                 }
-            }else{
-                return false;
             }
+            
+            return false;
         }
         
         stack.is_empty()
