@@ -11,7 +11,7 @@ impl MyCircularQueue {
     fn new(k: i32) -> Self {
         let k = k as usize;
         Self{
-            store: VecDeque::with_capacity(k),
+            store: VecDeque::new(),
             capacity: k,
         }
     }
