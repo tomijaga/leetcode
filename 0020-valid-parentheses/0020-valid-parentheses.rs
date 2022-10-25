@@ -14,8 +14,10 @@ impl Solution {
                 stack.push(c);
                 continue;
             }else if let Some(b) = stack.pop(){
-                if brackets[&b] == c{
-                    continue;
+                if let Some(&end) = brackets.get(&b){
+                    if end == c{
+                        continue;
+                    }
                 }
             }
             
