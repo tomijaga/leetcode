@@ -19,7 +19,7 @@ impl Solution {
             stack.push((temp, j));
         }
         
-        mem::drop(stack);
+        // mem::drop(stack);
         
         res
     }
