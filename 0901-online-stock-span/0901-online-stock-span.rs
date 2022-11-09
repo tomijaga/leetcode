@@ -14,7 +14,7 @@ impl StockSpanner {
     fn next(&mut self, price: i32) -> i32 {
         self.index += 1;
         
-        let mut span = self.index - 0;
+        let mut span = 1;
         
         while let Some(&(prev_val, prev_index)) = self.stack.last(){
             if prev_val <= price{
