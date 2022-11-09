@@ -4,20 +4,18 @@ use std::iter::FromIterator;
 impl Solution {
     pub fn smallest_common_element(mat: Vec<Vec<i32>>) -> i32 {
         let mut main_set: HashSet<i32> = HashSet::from_iter(mat[0].clone());
-        let mut removes = vec![];
         
         for arr in mat.into_iter().skip(1){
-            let set: HashSet<i32> = HashSet::from_iter(arr);
+            let mut set = HashSet::new();
             
-            for n in main_set.iter().cloned(){
-                if !set.contains(&n){
-                    removes.push(n);
+            for n in arr{
+                if main_set.contains(&n){
+                    set.insert(n);
                 }
             }
             
-            while let Some(n) = removes.pop(){
-                main_set.remove(&n);
-            }
+            main_set = set;
+
         }
         
         let mut min_val = i32::MAX;
