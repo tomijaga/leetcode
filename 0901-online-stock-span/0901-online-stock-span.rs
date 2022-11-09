@@ -17,11 +17,10 @@ impl StockSpanner {
         let mut cnt = 0;
         let mut span = self.index - 0;
         
-        while let Some(&(prev_val, prev_index)) = self.stack.last(){
-            if prev_val <= price{
-                self.stack.pop();
-            }else{
+        while let Some((prev_val, prev_index)) = self.stack.pop(){
+            if prev_val > price{
                 span = self.index - prev_index;
+                self.stack.push((prev_val, prev_index));
                 break;
             }
         }
@@ -30,9 +29,7 @@ impl StockSpanner {
             span = self.index;
         };
         
-        
         self.stack.push((price, self.index));
-        // println!("{:?}", &self.stack);
         span
     }
 }
