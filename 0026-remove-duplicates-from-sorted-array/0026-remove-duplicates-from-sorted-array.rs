@@ -1,21 +1,18 @@
 impl Solution {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         let mut len = nums.len();
-        let mut partition = 0;
+        let mut valid_indices = 0;
         
-        for i in (1..len).rev(){
+        for i in (1..len){
             let a = nums[i - 1];
             let b = nums[i];
             
-            if a == b{
-                partition += 1;
-                nums.swap(i, len - partition);
+            if a != b{
+                valid_indices += 1;
+                nums[valid_indices] = b;
             }
-            
         }
         
-        nums[0..(len-partition)].sort_unstable();
-        
-        (len - partition) as i32
+        (valid_indices + 1) as i32
     }
 }
