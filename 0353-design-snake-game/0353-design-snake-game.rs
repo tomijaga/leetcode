@@ -43,12 +43,11 @@ impl SnakeGame {
         if let Some(food) = self.food.last(){
             if head.0 == food[0] && head.1 == food[1]{
                 ate_food = true;
+                self.food.pop();
             }
         }
         
-        if ate_food{
-            self.food.pop();
-        }else{
+        if !ate_food{
             let tail =  self.snake.pop_back().unwrap();
             self.set.remove(&tail);
         }
